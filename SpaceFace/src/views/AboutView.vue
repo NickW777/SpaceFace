@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import InputText from 'primevue/inputtext';
+
+</script>
+
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <!-- <h1>This is an about page</h1> -->
+    <InputText></InputText>
   </div>
 </template>
 
