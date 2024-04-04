@@ -1,88 +1,35 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import InputText from 'primevue/inputtext'
-import Card from 'primevue/card'
+import RoomCard from "../components/RoomCard.vue";
 
 const jsonData = {
-  items: ['ILC 3rd Floor Library', 'LGRT', 'room', 'room']
+  items: ['ILC 3rd Floor Library', 'LGRT', '301', '302', '303', '303', '303', '303', '303']
 }
 </script>
 
 <template>
-  <!-- <p>temp</p> -->
-  <!-- <p>{{ jsonData.items }}</p> -->
-
-  <div class="d-flex align-items-left" style="background-color: blueviolet;">
-    <Card style="width: 25em">
-      <template #title> Simple Card </template>
-      <template #content>
-        <p class="m-0">text</p>
-      </template>
-    </Card>
-  </div>
+<div class="header">
+  <h1>StudySpace</h1>
+</div>
+<div class="card-section">
+  <RoomCard v-for="(item, index) in jsonData.items" :key="index" :title="item" />
+</div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+  .header {
+    background-color: blueviolet;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color:white;
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
+  .card-section {
     display: flex;
-    place-items: flex-start;
     flex-wrap: wrap;
+    flex-direction: row;
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+  body {
+    overflow-x: hidden;
   }
-}
 </style>
