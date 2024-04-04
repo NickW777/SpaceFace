@@ -1,12 +1,24 @@
 <script setup lang="ts">
 import InputText from 'primevue/inputtext';
 
+const jsonData = {
+  items: [
+    "item",
+    "item",
+    "item",
+    "item"
+  ]
+}
 </script>
+
+
 
 <template>
   <div class="about">
-    <!-- <h1>This is an about page</h1> -->
     <InputText></InputText>
+    <ul>
+      <li v-for="(item, index) in jsonData.items" :key="index">{{ item }}</li>
+    </ul>
   </div>
 </template>
 

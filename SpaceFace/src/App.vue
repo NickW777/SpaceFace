@@ -1,24 +1,26 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-// import HelloWorld from './components/HelloWorld.vue'
-import InputText from 'primevue/inputtext';
+import HelloWorld from './components/HelloWorld.vue'
+import InputText from 'primevue/inputtext'
+import Card from 'primevue/card'
+
+const jsonData = {
+  items: ['ILC 3rd Floor Library', 'LGRT', 'room', 'room']
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <!-- <p>temp</p> -->
+  <!-- <p>{{ jsonData.items }}</p> -->
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div class="d-flex align-items-left" style="background-color: blueviolet;">
+    <Card style="width: 25em">
+      <template #title> Simple Card </template>
+      <template #content>
+        <p class="m-0">text</p>
+      </template>
+    </Card>
+  </div>
 </template>
 
 <style scoped>
