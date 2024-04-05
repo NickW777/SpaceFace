@@ -4,9 +4,10 @@
     <template #header>
       <img class="card-img" alt="ILC" src="../images/ILC.jpeg"/>
     </template>
-    <template #title> {{title}} </template>
+      <template #title> <div class="title">{{title}}</div> </template>
+    <template #content>Available for 1 hour</template>
     <template #footer>
-      <p>Outlets: Yes</p>
+      <p>icon icon icon star</p>
     </template>
   </Card>
 </div>
@@ -24,12 +25,19 @@ export default {
 
 <style scoped>
   .room-card {
-    background-color: rgb(170, 170, 170);
-    max-width: 50%;
+    background-color: rgb(230, 230, 230);
+    max-width: 45%;
     border-radius: 20px;
     text-align: center;
+    margin: 8px;
+    padding-top: 10px;
   }
   .card-img {
-    max-width: 80%;
+    max-width: 95%;
+    border-radius: 10px;
+  }
+  .title {
+    font-size: 15px;
+    font-weight: bold;
   }
 </style>
