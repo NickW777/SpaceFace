@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import AppHeader from './AppHeader.vue'
+import RoomList from './RoomList.vue'
 </script>
 
 <template>
   <div>
-    <h1>Main Menu</h1>
+    <AppHeader />
+    <RoomList />
   </div>
 </template>
