@@ -1,6 +1,12 @@
 {
   "extends": "@tsconfig/node20/tsconfig.json",
   "include": [
+    "./src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "./src/**/*.vue",
     "vite.config.*",
     "vitest.config.*",
     "cypress.config.*",

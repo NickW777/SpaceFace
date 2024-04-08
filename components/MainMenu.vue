@@ -3,6 +3,6 @@
 
 <template>
   <div>
-    <h1>Room Card</h1>
+    <h1>Main Menu</h1>
   </div>
 </template>
