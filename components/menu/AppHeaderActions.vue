@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import MultiSelect from '../shared/MultiSelect.vue';
-import RoundButton from '../shared/RoundButton.vue';
 
 const options = [
   { value: 1, label: 'map-marker-outline' },
@@ -14,6 +13,11 @@ type Value = typeof options[number]['value']
 const selectedFilter = ref<Value>(options[0].value)
 
 const searchActive = ref(false)
+const searchInput = ref<HTMLInputElement | null>(null)
+
+watch(searchActive, (isActive) => {
+  if (isActive) queueMicrotask(() => searchInput.value.focus())
+})
 
 </script>
 
@@ -22,7 +26,7 @@ const searchActive = ref(false)
 
     <div
       :class="[
-        'bg-white text-black rounded-full flex items-center transition-all duration-300 ease-in-out',
+        'bg-white text-black rounded-full flex items-center transition-all duration-300 ease-in-out flex items-center',
         searchActive ? 'w-full' : 'w-16',
       ]"
 
@@ -39,6 +43,14 @@ const searchActive = ref(false)
           :size="searchActive ? 28 : 24"
         />
       </button>
+
+      <input
+        v-show="searchActive"
+        ref="searchInput"
+        type="text"
+        class="w-2/3 outline-transparent"
+        placeholder="Search"
+      />
     </div>
 
     <MultiSelect
