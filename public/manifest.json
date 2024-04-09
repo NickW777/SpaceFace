@@ -1,0 +1,8 @@
+{
+  "name": "Study Space",
+  "short_name": "Study Space",
+  "display": "standalone",
+  "background_color": "#4E2073",
+  "theme_color": "#4E2073",
+  "orientation": "portrait"
+}

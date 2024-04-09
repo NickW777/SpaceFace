@@ -1,0 +1,13 @@
+{
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@store/*": ["./src/store/*"],
+      "@components/*": ["./src/components"],
+      "@utils/*": ["./src/utils/*"],
+      "@composables/*": ["./src/composables/*"],
+    }
+  },
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
