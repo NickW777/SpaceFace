@@ -8,6 +8,6 @@ const HEADER_HEIGHT_PX = 110
 <template>
   <div>
     <AppHeader :class="[`h-[${HEADER_HEIGHT_PX}px]`]" />
-    <RoomList :class="[`h-[calc(100vh-${HEADER_HEIGHT_PX}px)]`, 'py-3']" />
+    <RoomList :class="[`h-[calc(100vh-${HEADER_HEIGHT_PX}px)]`]" />
   </div>
 </template>
