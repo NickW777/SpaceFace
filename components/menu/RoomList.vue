@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import RoomCard from './RoomCard.vue'
+import { useRoomStore } from '../../store/rooms';
+import { storeToRefs } from 'pinia';
+
+const roomStore = useRoomStore()
+const { showDetail } = storeToRefs(roomStore)
 </script>
 
 <template>
@@ -10,6 +15,7 @@ import RoomCard from './RoomCard.vue'
       class="w-1/2 px-1 pb-2"
     >
       <RoomCard
+        @click.stop="showDetail = true"
         building="ILC"
         room="N151"
         thumbnail="/images/ILC.jpeg"
