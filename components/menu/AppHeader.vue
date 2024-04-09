@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import RoundButton from '../shared/RoundButton.vue'
+import MultiSelect from '../shared/MultiSelect.vue'
+
+const options = [
+  { value: 1, label: 1 },
+  { value: 2, label: 2 },
+  { value: 3, label: 3 }
+] as const
+
+const selectedFilter = ref<typeof options[number]['value']>(options[0].value)
 </script>
 
 <template>
@@ -7,6 +17,7 @@ import RoundButton from '../shared/RoundButton.vue'
     class="w-screen bg-study-space rounded-b-xl text-white flex p-5 flex-col"
   >
 
+    <!-- title -->
     <h1 class="text-4xl font-bold">
       Study Spaces
     </h1>
@@ -17,9 +28,10 @@ import RoundButton from '../shared/RoundButton.vue'
         Search
       </RoundButton>
 
-      <RoundButton>
-        Misc. Options
-      </RoundButton>
+      <MultiSelect
+        v-model="selectedFilter"
+        :options="options"
+      />
     </div>
 
   </header>
