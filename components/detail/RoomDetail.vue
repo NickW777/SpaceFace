@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
+import BackNavigate from '../detail/BackNavigate.vue'
 import RoomAvailability from './RoomAvailability.vue'
 import { useRoomStore } from '../../store/rooms';
 import { storeToRefs } from 'pinia';
@@ -17,9 +18,9 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
 
 <template>
   <div
-    @click.stop="showDetail = false"
     class="w-screen h-screen"
   >
+    <BackNavigate @click.stop="showDetail = false" />
     <!-- images carousel - implement this with swiper.js! -->
     <img
       src="/images/ILC.jpeg"
