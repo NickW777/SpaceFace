@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import RoundButton from './RoundButton.vue'
+import RoundButton from '../shared/RoundButton.vue'
 </script>
 
 <template>

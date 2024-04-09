@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MainMenu from '../components/MainMenu.vue'
+import MainMenu from '../components/menu/MainMenu.vue'
 </script>
 
 <template>

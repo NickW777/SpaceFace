@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Label, LABEL_DISPLAY } from '../utils/labels'
+import { type Label, LABEL_DISPLAY } from '../../utils/labels'
 
 defineProps<{
   label: Label

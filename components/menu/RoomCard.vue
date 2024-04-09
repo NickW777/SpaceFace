@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import RoomLabel from './RoomLabel.vue'
-import type { Label } from '../utils/labels'
+import RoomLabel from '../shared/RoomLabel.vue'
+import type { Label } from '../../utils/labels'
 
 const props = defineProps<{
   building: string,
