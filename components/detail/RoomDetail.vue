@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
 import BackNavigate from '../detail/BackNavigate.vue'
@@ -8,6 +9,8 @@ import { storeToRefs } from 'pinia';
 
 const roomStore = useRoomStore()
 const { showDetail } = storeToRefs(roomStore)
+
+const favorite = ref(false)
 
 // get room from pinia, showDisplay should be a derived value that is true when room is not null
 // selecting a room should set the room in the store
@@ -69,7 +72,8 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
           />
 
           <LargeCircularButton
-            icon="star"
+            @click.stop="favorite = !favorite"
+            :icon="favorite ? 'star' : 'star-outline'"
             class="bg-favorite text-white"
           />
         </div>

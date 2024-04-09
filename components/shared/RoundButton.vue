@@ -1,6 +1,6 @@
 <template>
   <button
-    class="rounded-full bg-white text-black px-3 shadow-black shadow-sm h-6"
+    class="rounded-full bg-white text-black px-5 shadow-black shadow-sm h-8"
   >
     <slot></slot>
   </button>

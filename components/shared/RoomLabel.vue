@@ -20,6 +20,9 @@ defineProps<{
       LABEL_DISPLAY[label].color
     ]"
   >
-    <!-- TODO the icon goes here -->
+    <mdicon
+      :name="LABEL_DISPLAY[label].icon"
+      size="16"
+    />
   </div>
 </template>

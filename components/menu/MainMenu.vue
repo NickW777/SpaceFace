@@ -2,7 +2,7 @@
 import AppHeader from './AppHeader.vue'
 import RoomList from './RoomList.vue'
 
-const HEADER_HEIGHT_PX = 110
+const HEADER_HEIGHT_PX = 125
 </script>
 
 <template>

@@ -9,20 +9,20 @@
 
 const LABEL_DISPLAY = {
   OUTLETS: {
-    color: 'bg-yellow-500',
-    icon: 'mdi-power' // these are just examples, you can use any icon/icon library you want
+    color: 'bg-orange-600',
+    icon: 'power-plug-outline' // these are just examples, you can use any icon/icon library you want
   },
   NO_OUTLETS: {
-    color: 'bg-red-500',
-    icon: 'mdi-power-off'
+    color: 'bg-red-600',
+    icon: 'power-plug-off-outline'
   },
   WHITEBOARD: {
-    color: 'bg-blue-500',
-    icon: 'mdi-whiteboard'
+    color: 'bg-blue-600',
+    icon: 'human-male-board'
   },
   CHALKBOARD: {
-    color: 'bg-green-500',
-    icon: 'mdi-chalkboard'
+    color: 'bg-green-600',
+    icon: 'pencil'
   },
   // so on and so forth for each possible label in StudySpace Entities
 } as const

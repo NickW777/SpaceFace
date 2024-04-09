@@ -8,6 +8,7 @@ type Option<T> = {
 defineProps<{
   modelValue: T,
   options: Option<T>[] | readonly Option<T>[],
+  type?: 'icon' | 'text',
   padding?: string | number
 }>()
 
@@ -19,7 +20,7 @@ const emits = defineEmits<{
 
 <template>
   <div
-    class="flex items-center justify-between bg-white rounded-full p-1 h-6"
+    class="flex items-center justify-between bg-white rounded-full p-1 h-8"
   >
     <button
       v-for="(option, i) in options"
@@ -30,10 +31,18 @@ const emits = defineEmits<{
         option.value === modelValue ? 'bg-study-space-light' : 'bg-white',
         `px-${padding ?? 5}`,
         'rounded-full',
-        'h-5'
+        'h-7'
       ]"
     >
-      {{ option.label }}
+      <mdicon
+        v-if="type === 'icon'"
+        :name="option.label"
+        :size="22"
+      ></mdicon>
+      <span v-else>
+        {{ option.label }}
+      </span>
+
     </button>
   </div>
 </template>

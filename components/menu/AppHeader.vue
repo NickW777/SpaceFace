@@ -4,9 +4,9 @@ import RoundButton from '../shared/RoundButton.vue'
 import MultiSelect from '../shared/MultiSelect.vue'
 
 const options = [
-  { value: 1, label: 1 },
-  { value: 2, label: 2 },
-  { value: 3, label: 3 }
+  { value: 1, label: 'map-marker-outline' },
+  { value: 2, label: 'star-outline' },
+  { value: 3, label: 'wheelchair-accessibility' }
 ] as const
 
 type Value = typeof options[number]['value']
@@ -20,20 +20,21 @@ const selectedFilter = ref<Value>(options[0].value)
   >
 
     <!-- title -->
-    <h1 class="text-4xl font-bold">
+    <h1 class="text-5xl font-bold">
       Study Spaces
     </h1>
 
     <!-- actions -->
     <div class="mt-2 flex justify-between">
       <RoundButton>
-        Search
+        <mdicon name="magnify" size="24" />
       </RoundButton>
 
       <MultiSelect
         v-model="selectedFilter"
         :options="options"
-        class="w-[150px]"
+        type="icon"
+        class="w-[200px]"
       />
     </div>
 

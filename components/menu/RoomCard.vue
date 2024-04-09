@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import RoomLabel from '../shared/RoomLabel.vue'
 import type { Label } from '../../utils/labels'
+
+const favorite = ref(false)
 
 const props = defineProps<{
   building: string,
@@ -21,13 +24,29 @@ const props = defineProps<{
       class="bg-gray-300 h-[120px] w-full rounded-xl object-cover"
     />
 
-    <!-- labels -->
-    <div class="flex gap-1 py-2">
-      <RoomLabel
-        v-for="label in props.labels"
-        :key="label"
-        :label="label"
-      />
+    <div class="flex justify-between">
+
+      <!-- labels -->
+      <div class="flex gap-1 py-2">
+        <RoomLabel
+          v-for="label in props.labels"
+          :key="label"
+          :label="label"
+        />
+      </div>
+
+      <!-- favorite a room -->
+      <button @click.stop="favorite = !favorite">
+        <mdicon
+          :name="favorite ? 'star' : 'star-outline'"
+          :class="{
+            'text-yellow-400': favorite,
+            'text-black': !favorite
+          }"
+          :size="28"
+        />
+      </button>
+
     </div>
 
     <!-- detail -->
