@@ -3,7 +3,7 @@ import RoomCard from './RoomCard.vue'
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-2 items-center justify-center">
+  <div class="flex flex-wrap gap-2 items-center justify-center overflow-auto">
     <div
       v-for="i in 100"
       :key="i"

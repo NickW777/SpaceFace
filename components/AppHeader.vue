@@ -4,7 +4,7 @@ import RoundButton from './RoundButton.vue'
 
 <template>
   <header
-    class="w-screen h-[110px] bg-study-space rounded-b-xl text-white flex p-5 flex-col"
+    class="w-screen bg-study-space rounded-b-xl text-white flex p-5 flex-col"
   >
 
     <h1 class="text-4xl font-bold">
