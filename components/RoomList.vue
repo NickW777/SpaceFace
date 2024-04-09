@@ -14,7 +14,7 @@ import RoomCard from './RoomCard.vue'
         room="N151"
         thumbnail="../images/ILC.jpeg"
         availability="Available Now Until 5PM"
-        :labels="['OUTLETS', 'WHITEBOARD']"
+        :labels="['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD']"
       />
     </div>
   </div>
