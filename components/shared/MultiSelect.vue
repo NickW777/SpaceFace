@@ -21,7 +21,7 @@ const emits = defineEmits<{
   <div
     class="flex items-center justify-between bg-white rounded-full p-1 h-6"
   >
-    <div
+    <button
       v-for="(option, i) in options"
       :key="i"
       @click.stop="emits('update:modelValue', option.value)"
@@ -34,6 +34,6 @@ const emits = defineEmits<{
       ]"
     >
       {{ option.label }}
-    </div>
+    </button>
   </div>
 </template>

@@ -26,12 +26,24 @@ defineProps<{
 <template>
   <div>
 
-    <h1 class="text-4xl font-semibold">
-      Availability
-    </h1>
+    <div class="flex justify-between items-center my-1 px-3">
 
-    <!-- content - come up with design and fill in with data computed from block map -->
+      <!-- title -->
+      <h1 class="text-4xl font-semibold">
+        Availability
+      </h1>
+
+      <!-- emblem -->
+      <span class="bg-green-500 text-white px-3 rounded-full shadow-gray-400 shadow-sm">
+        ready now
+      </span>
+
+    </div>
+
+    <!-- content -->
     <div class="bg-gray-200 p-5 flex flex-col gap-3 rounded-2xl">
+
+      <!-- come up with design and fill in with data computed from block map -->
       <div
         v-for="i in 3"
         :key="i"
@@ -42,6 +54,7 @@ defineProps<{
       <MultiSelect
         v-model="selectedDay"
         :options="DAYS_OF_WEEK"
+        class="mt-4"
         padding="3"
       />
 

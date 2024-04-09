@@ -9,7 +9,9 @@ const options = [
   { value: 3, label: 3 }
 ] as const
 
-const selectedFilter = ref<typeof options[number]['value']>(options[0].value)
+type Value = typeof options[number]['value']
+
+const selectedFilter = ref<Value>(options[0].value)
 </script>
 
 <template>
