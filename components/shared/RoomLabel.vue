@@ -13,6 +13,10 @@ defineProps<{
       'text-white',
       'grid',
       'place-items-center',
+      'shadow-gray-400',
+      'shadow-sm',
+      'w-6',
+      'h-6',
       LABEL_DISPLAY[label].color
     ]"
   >

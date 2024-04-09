@@ -22,21 +22,20 @@ const props = defineProps<{
     />
 
     <!-- labels -->
-    <div class="flex gap-1 py-1">
+    <div class="flex gap-1 py-2">
       <RoomLabel
         v-for="label in props.labels"
         :key="label"
         :label="label"
-        class="w-6 h-6"
       />
     </div>
 
     <!-- detail -->
     <div class="flex flex-col">
-      <div class="text-lg font-bold leading-[1]">
+      <div class="text-xl font-bold leading-[1]">
         {{ props.building }} {{ props.room }}
       </div>
-      <div class="text-sm">
+      <div class="text-sm leading-[1.2]">
         {{ props.availability }}
       </div>
     </div>

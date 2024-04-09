@@ -19,7 +19,7 @@ const { showDetail } = storeToRefs(roomStore)
         building="ILC"
         room="N151"
         thumbnail="/images/ILC.jpeg"
-        availability="Available Now Until 5PM"
+        availability="Available For Another 3 Hours (Until 5pm)"
         :labels="['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD']"
       />
     </div>

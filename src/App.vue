@@ -28,7 +28,7 @@ body {
 
 .in-enter-active,
 .in-leave-active {
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
   position: fixed;
 }
 
@@ -44,7 +44,7 @@ body {
 
 .out-enter-active,
 .out-leave-active {
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
   position: fixed;
 }
 
