@@ -31,6 +31,7 @@ const selectedFilter = ref<typeof options[number]['value']>(options[0].value)
       <MultiSelect
         v-model="selectedFilter"
         :options="options"
+        class="w-[150px]"
       />
     </div>
 

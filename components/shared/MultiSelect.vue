@@ -7,7 +7,8 @@ type Option<T> = {
 
 defineProps<{
   modelValue: T,
-  options: Option<T>[] | readonly Option<T>[]
+  options: Option<T>[] | readonly Option<T>[],
+  padding?: string | number
 }>()
 
 const emits = defineEmits<{
@@ -17,7 +18,9 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <div class="flex items-center gap-1 bg-white rounded-full p-1 h-6">
+  <div
+    class="flex items-center justify-between bg-white rounded-full p-1 h-6"
+  >
     <div
       v-for="(option, i) in options"
       :key="i"
@@ -25,8 +28,8 @@ const emits = defineEmits<{
       :class="[
         option.value === modelValue ? 'text-white' : 'text-black',
         option.value === modelValue ? 'bg-study-space-light' : 'bg-white',
+        `px-${padding ?? 5}`,
         'rounded-full',
-        'px-6',
         'h-5'
       ]"
     >
