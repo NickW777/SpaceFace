@@ -20,7 +20,9 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
   <div
     class="w-screen h-screen"
   >
+
     <BackNavigate @click.stop="showDetail = false" />
+
     <!-- images carousel - implement this with swiper.js! -->
     <img
       src="/images/ILC.jpeg"
@@ -61,8 +63,15 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
 
         <!-- large action buttons -->
         <div class="flex flex-col gap-2">
-          <LargeCircularButton class="bg-study-space-light" />
-          <LargeCircularButton class="bg-favorite" />
+          <LargeCircularButton
+            icon="map-outline"
+            class="bg-study-space-light text-white"
+          />
+
+          <LargeCircularButton
+            icon="star"
+            class="bg-favorite text-white"
+          />
         </div>
 
       </div>

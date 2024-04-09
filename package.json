@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "mdi-vue": "^3.0.13",
     "pinia": "^2.1.7",
     "primevue": "^3.50.0",
     "vue": "^3.4.21",
