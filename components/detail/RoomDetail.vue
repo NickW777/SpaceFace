@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia';
+import { useRoomStore } from '../../store/rooms';
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
 import BackNavigate from '../detail/BackNavigate.vue'
 import RoomAvailability from './RoomAvailability.vue'
-import { useRoomStore } from '../../store/rooms';
-import { storeToRefs } from 'pinia';
+import RoomImageDisplay from './RoomImageDisplay.vue';
 
 const roomStore = useRoomStore()
 const { showDetail } = storeToRefs(roomStore)
 
 const favorite = ref(false)
-
-// get room from pinia, showDisplay should be a derived value that is true when room is not null
-// selecting a room should set the room in the store
 
 const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
 
@@ -27,15 +25,17 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
     <BackNavigate @click.stop="showDetail = false" />
 
     <!-- images carousel - implement this with swiper.js! -->
-    <img
-      src="/images/ILC.jpeg"
-      alt="room"
-      class="w-full h-[40%] object-cover"
+    <RoomImageDisplay
+      :images="[
+        '/images/ILC.jpeg',
+        'https://www.umass.edu/cp/sites/default/files/Integrative%20Learning%20Center%20%28ILC%29_02.jpg',
+        'https://www.umass.edu/cp/sites/default/files/Integrative%20Learning%20Center%20%28ILC%29_04.jpg'
+      ]"
     />
 
     <!-- popover tab -->
     <div
-      class="w-full h-[calc(60%+10px)] bg-white rounded-t-xl -translate-y-[10px] p-4 overflow-auto"
+      class="z-50 absolute w-full h-[60%] bg-white rounded-t-xl -translate-y-[10px] p-4 overflow-auto"
     >
 
       <div class="px-2 flex justify-between">
@@ -85,6 +85,25 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
         availability="replace me with some data from block map!"
         class="mt-[90px]"
       />
+
+      <!-- additional info -->
+      <div class="py-8 px-2 flex justify-between">
+
+        <div class="text-2xl font-semibold">
+          <div>Capacity</div>
+          <div class="font-light">
+            20
+          </div>
+        </div>
+
+        <div class="text-2xl font-semibold text-right">
+          <div>Last Edited</div>
+          <div class="font-light">
+            Yesterday
+          </div>
+        </div>
+
+      </div>
 
     </div>
 
