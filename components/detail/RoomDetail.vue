@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useTimeAgo } from '@vueuse/core'
 import { storeToRefs } from 'pinia';
 import { useRoomStore } from '../../store/rooms';
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
 import BackNavigate from '../detail/BackNavigate.vue'
 import RoomAvailability from './RoomAvailability.vue'
-import RoomImageDisplay from './RoomImageDisplay.vue';
+import RoomImageDisplay from './RoomImageDisplay.vue'
+import RectButton from '../shared/RectButton.vue'
 
 const roomStore = useRoomStore()
 const { showDetail } = storeToRefs(roomStore)
@@ -15,6 +17,8 @@ const favorite = ref(false)
 
 const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
 
+// replace this with last_edited from space provider
+const lastEdited = useTimeAgo(Date.now())
 </script>
 
 <template>
@@ -86,21 +90,49 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
         class="mt-[90px]"
       />
 
-      <!-- additional info -->
-      <div class="py-8 px-2 flex justify-between">
+      <div class="px-2 mb-10">
 
-        <div class="text-2xl font-semibold">
-          <div>Capacity</div>
-          <div class="font-light">
-            20
+        <!-- additional info -->
+        <div class="my-8 flex justify-between">
+          <div class="text-2xl font-semibold">
+            <div>
+              Capacity
+            </div>
+            <div class="font-light">
+              200
+            </div>
+          </div>
+
+          <div class="text-2xl font-semibold text-right">
+            <div>
+              Last Edited
+            </div>
+            <div class="font-light capitalize">
+              {{ lastEdited }}
+            </div>
           </div>
         </div>
 
-        <div class="text-2xl font-semibold text-right">
-          <div>Last Edited</div>
-          <div class="font-light">
-            Yesterday
-          </div>
+        <RectButton
+          class="bg-blue-500 text-white w-full mb-2"
+          icon="pencil"
+        >
+          Edit This Room
+        </RectButton>
+
+        <div class="flex gap-2">
+          <RectButton
+            icon="message"
+            class="bg-study-space text-white"
+          >
+            Feedback
+          </RectButton>
+          <RectButton
+            icon="alert"
+            class="bg-red-500 text-white"
+          >
+            Report Issue
+          </RectButton>
         </div>
 
       </div>
