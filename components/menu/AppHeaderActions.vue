@@ -5,7 +5,7 @@ import MultiSelect from '../shared/MultiSelect.vue';
 const options = [
   { value: 1, label: 'map-marker-outline' },
   { value: 2, label: 'star-outline' },
-  { value: 3, label: 'wheelchair-accessibility' }
+  { value: 3, label: 'wheelchair-accessibility' },
 ] as const
 
 type Value = typeof options[number]['value']

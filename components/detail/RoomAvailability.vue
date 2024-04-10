@@ -2,8 +2,13 @@
 import { ref } from 'vue'
 import MultiSelect from '../shared/MultiSelect.vue';
 
+import { useCounter } from '../../composables/counter'
+
+const { count, increment, double } = useCounter(20)
+const counter2 = useCounter(15)
+
 const DAYS_OF_WEEK = [
-  { value: 'sun', label: 'sun' },
+  { value: 'sun', label: '☀️' },
   { value: 'mon', label: 'mon' },
   { value: 'tue', label: 'tue' },
   { value: 'wed', label: 'wed' },
@@ -44,11 +49,26 @@ defineProps<{
     <div class="bg-gray-200 p-5 flex flex-col gap-3 rounded-2xl">
 
       <!-- come up with design and fill in with data computed from block map -->
+      <!-- this may be a new component -->
       <div
         v-for="i in 3"
         :key="i"
         class="h-12 w-full bg-gray-300 rounded-xl"
       ></div>
+
+      <button
+        @click="increment"
+        class="bg-gray-800 p-3 text-white font-bold text-2xl"
+      >
+        {{ count }} - {{ double }}
+      </button>
+
+      <button
+        @click="counter2.increment"
+        class="bg-gray-800 p-3 text-white font-bold text-2xl"
+      >
+        {{ counter2.count }}
+      </button>
 
       <!-- select day of week -->
       <MultiSelect
