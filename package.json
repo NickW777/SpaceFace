@@ -13,9 +13,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/core": "^10.9.0",
     "mdi-vue": "^3.0.13",
     "pinia": "^2.1.7",
     "primevue": "^3.50.0",
+    "swiper": "^11.1.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
