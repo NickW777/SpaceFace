@@ -19,6 +19,23 @@ const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
 
 // replace this with last_edited from space provider
 const lastEdited = useTimeAgo(Date.now())
+const room = 'ILC-N151'
+
+const fileIssue = (type: 'issue' | 'feedback') => {
+  const title = type === 'issue' ? 'Report Issue' : 'Feedback'
+  const titleQuery = `title=${title} (${room})`
+  const labelsQuery = `labels=user%20${type}`
+  const spaceFaceTeam = ['yonava', 'NickW777', 'wsau2', 'shruts046']
+  const assigneesQuery = `assignees=${spaceFaceTeam.join(',')}`
+  const query = `?${titleQuery}&${labelsQuery}&${assigneesQuery}`
+  const issueUrl = `https://github.com/NickW777/SpaceFace/issues/new${query}`
+  window.open(issueUrl, '_blank')
+}
+
+const editRoom = () => {
+  // get from pinia store
+  window.open(`https://spaceprovider.up.railway.app/admin?room=${room}`, '_blank')
+}
 </script>
 
 <template>
@@ -114,6 +131,7 @@ const lastEdited = useTimeAgo(Date.now())
         </div>
 
         <RectButton
+          @click.stop="editRoom"
           class="bg-blue-500 text-white w-full mb-2"
           icon="pencil"
         >
@@ -122,12 +140,14 @@ const lastEdited = useTimeAgo(Date.now())
 
         <div class="flex gap-2">
           <RectButton
+            @click.stop="fileIssue('feedback')"
             icon="message"
             class="bg-study-space text-white"
           >
             Feedback
           </RectButton>
           <RectButton
+            @click.stop="fileIssue('issue')"
             icon="alert"
             class="bg-red-500 text-white"
           >
