@@ -36,6 +36,9 @@ const editRoom = () => {
   // get from pinia store
   window.open(`https://spaceprovider.up.railway.app/admin?room=${room}`, '_blank')
 }
+const googleMaps = () => {
+  window.open(`https://www.google.com/maps/@42.3937021,-72.5315629,14z?entry=ttu`, '_blank')
+}
 </script>
 
 <template>
@@ -88,8 +91,10 @@ const editRoom = () => {
         <!-- large action buttons -->
         <div class="flex flex-col gap-2">
           <LargeCircularButton
+           @click.stop="googleMaps"
             icon="map-outline"
             class="bg-study-space-light text-white"
+            
           />
 
           <LargeCircularButton
