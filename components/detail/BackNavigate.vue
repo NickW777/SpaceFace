@@ -4,7 +4,7 @@ import LargeCircularButton from '../shared/LargeCircularButton.vue';
 
 <template>
   <LargeCircularButton
-    class="bg-white m-5 text-4xl absolute top-0"
+    class="bg-white m-5 text-4xl absolute top-0 z-50"
     icon="chevron-left"
     icon-size="40"
   >
