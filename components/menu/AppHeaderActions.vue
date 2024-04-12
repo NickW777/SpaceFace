@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useDebounceFn } from '@vueuse/core'
+import { ref, watch, computed } from 'vue'
+import { executeTransition, useDebounceFn, useFetch } from '@vueuse/core'
 import MultiSelect from '../shared/MultiSelect.vue'
 
 const options = [
@@ -25,10 +25,19 @@ watch(searchActive, (isActive) => {
     })
 })
 
+async function fetchData(q: string | null) {
+  if (!q) q = ''
+  const { data } = await useFetch(
+    `https://spaceprovider.up.railway.app/api/v1?q=${q}&page=1&limit=2`
+  ).get()
+  return data
+}
+
+//Run the SpaceProvider Query after 2 sec of inactivity
 watch(
   searchText,
   useDebounceFn(() => {
-    console.log(searchText.value)
+    console.log(fetchData(searchText.value).then((data) => console.log(data.value)))
   }, 2000)
 )
 </script>
