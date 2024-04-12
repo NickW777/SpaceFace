@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import MultiSelect from '../shared/MultiSelect.vue'
 
 const options = [
@@ -15,15 +16,21 @@ const selectedFilter = ref<Value>(options[0].value)
 const searchActive = ref(false)
 const searchInput = ref<HTMLInputElement | null>(null)
 
-const search = ref(null)
+const searchText = ref(null)
 
 watch(searchActive, (isActive) => {
   if (isActive)
     queueMicrotask(() => {
       searchInput.value?.focus()
-      console.log(search.value)
     })
 })
+
+watch(
+  searchText,
+  useDebounceFn(() => {
+    console.log(searchText.value)
+  }, 2000)
+)
 </script>
 
 <template>
@@ -46,7 +53,7 @@ watch(searchActive, (isActive) => {
 
       <input
         v-show="searchActive"
-        v-model="search"
+        v-model="searchText"
         ref="searchInput"
         type="text"
         class="w-2/3 outline-transparent"
