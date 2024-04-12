@@ -15,13 +15,13 @@ const selectedFilter = ref<Value>(options[0].value)
 const searchActive = ref(false)
 const searchInput = ref<HTMLInputElement | null>(null)
 
-// const search = ref<HTMLInputElement | null>(null)
+const search = ref(null)
 
 watch(searchActive, (isActive) => {
   if (isActive)
     queueMicrotask(() => {
-      // searchInput.focus()
-      console.log(searchInput.value)
+      searchInput.value?.focus()
+      console.log(search.value)
     })
 })
 </script>
@@ -46,7 +46,8 @@ watch(searchActive, (isActive) => {
 
       <input
         v-show="searchActive"
-        v-model="searchInput"
+        v-model="search"
+        ref="searchInput"
         type="text"
         class="w-2/3 outline-transparent"
         placeholder="Search"
