@@ -1,11 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { SpaceProviderType, SpaceProvider } from '../utils/ZodTypes'
 
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
       showDetail: ref(false),
-      currQuery: [] as string[]
+      currQuery: [] as SpaceProviderType[]
     }
   },
 
@@ -24,13 +25,10 @@ export const useRoomStore = defineStore('rooms', {
       this.showDetail = !this.showDetail
     },
 
-    storePage(s: string) {
+    storePage(s: SpaceProviderType | null) {
+      if (s === null) return
+      console.log('storing page')
       this.currQuery.push(s)
     }
   }
-  // const showDetail = ref(false)
-
-  // return {
-  //   showDetail
-  // }
 })

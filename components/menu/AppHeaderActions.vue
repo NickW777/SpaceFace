@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, computed, Ref } from 'vue'
-import { executeTransition, useDebounceFn, useFetch } from '@vueuse/core'
+import { ref, watch, Ref } from 'vue'
+import { useDebounceFn, useFetch } from '@vueuse/core'
 import MultiSelect from '../shared/MultiSelect.vue'
 import { useRoomStore } from '../../store/rooms'
+import { fetchData } from '../../utils/query'
 
 const roomStore = useRoomStore()
 
@@ -28,20 +29,11 @@ watch(searchActive, (isActive) => {
     })
 })
 
-async function fetchData(q: string | null): Promise<Ref<string | null>> {
-  if (!q) q = ''
-  const { data } = await useFetch<string>(
-    `https://spaceprovider.up.railway.app/api/v1?q=${q}&page=1&limit=2`
-  ).get()
-  data.value = JSON.stringify(data.value)
-  return data
-}
-
 //Run the SpaceProvider Query after 2 sec of inactivity
 watch(
   searchText,
   useDebounceFn(() => {
-    fetchData(searchText.value).then((data) => roomStore.storePage(data.value ?? ''))
+    fetchData(searchText.value).then((data) => roomStore.storePage(data))
   }, 2000)
 )
 </script>
@@ -85,3 +77,4 @@ watch(
     />
   </div>
 </template>
+../../utils/query

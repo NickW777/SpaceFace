@@ -2,19 +2,32 @@
 import MainMenu from '../components/menu/MainMenu.vue'
 import RoomDetail from '../components/detail/RoomDetail.vue'
 import { useRoomStore } from '../store/rooms'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
+import { fetchData } from '../utils/query'
 
 const roomStore = useRoomStore()
 const { showDetail } = storeToRefs(roomStore)
+
+const initialize = () => {
+  fetchData('').then((data) => roomStore.storePage(data))
+}
+initialize()
 </script>
 
 <template>
-  <div>
-    <Transition :name="showDetail ? 'in' : 'out'">
-      <RoomDetail v-if="showDetail" />
-      <MainMenu v-else />
-    </Transition>
-  </div>
+  <Suspense>
+    <template #default>
+      <div>
+        <Transition :name="showDetail ? 'in' : 'out'">
+          <RoomDetail v-if="showDetail" />
+          <MainMenu v-else />
+        </Transition>
+      </div>
+    </template>
+    <template #fallback>
+      <div>Loading...</div>
+    </template>
+  </Suspense>
 </template>
 
 <style>
@@ -56,3 +69,4 @@ body {
   transform: translateX(100%);
 }
 </style>
+../utils/query
