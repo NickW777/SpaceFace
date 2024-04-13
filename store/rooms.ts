@@ -12,6 +12,10 @@ export const useRoomStore = defineStore('rooms', {
   getters: {
     getPage: (state) => {
       return (i: number) => state.currQuery[i]
+    },
+
+    getPageCount: (state) => {
+      return () => state.currQuery.length
     }
   },
 
@@ -20,8 +24,8 @@ export const useRoomStore = defineStore('rooms', {
       this.showDetail = !this.showDetail
     },
 
-    storePage() {
-      this.currQuery.push('query')
+    storePage(s: string) {
+      this.currQuery.push(s)
     }
   }
   // const showDetail = ref(false)
