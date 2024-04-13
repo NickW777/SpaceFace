@@ -10,11 +10,11 @@ const roomStore = useRoomStore()
     <div v-for="i in roomStore.getPage(0).rooms.length" :key="i" class="w-1/2 px-1 pb-2">
       <RoomCard
         @click.stop="roomStore.toggleDetail()"
-        building="ILC"
+        :building="roomStore.getPage(0).rooms[i - 1].building"
         :room="roomStore.getPage(0).rooms[i - 1].room"
         thumbnail="/images/ILC.jpeg"
         availability="Available For Another 3 Hours (Until 5pm)"
-        :labels="['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD']"
+        :labels="roomStore.getPage(0).rooms[i - 1].labels"
       />
     </div>
   </div>

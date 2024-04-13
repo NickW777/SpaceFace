@@ -16,6 +16,18 @@ const LABEL_DISPLAY = {
     color: 'bg-red-600',
     icon: 'power-plug-off-outline'
   },
+  ACCESSIBLE: {
+    color: 'bg-green-600',
+    icon: 'wheelchair-accessibility-outline'
+  },
+  BAD_TEMP: {
+    color: 'bg-yellow-600',
+    icon: 'thermometer-minus'
+  },
+  LOCKED: {
+    color: 'bg-red-600',
+    icon: 'lock'
+  },
   WHITEBOARD: {
     color: 'bg-blue-600',
     icon: 'human-male-board'
@@ -24,12 +36,25 @@ const LABEL_DISPLAY = {
     color: 'bg-green-600',
     icon: 'pencil'
   },
+  COMPUTERS: {
+    color: 'bg-blue-600',
+    icon: 'desktop-tower-monitor'
+  },
+  WINDOWS: {
+    color: 'bg-blue-600',
+    icon: 'window-maximize'
+  },
+  TRAFFIC_LEVEL: {
+    color: 'bg-red-600',
+    icon: 'car'
+  },
+  QUIET_AREA: {
+    color: 'bg-green-600',
+    icon: 'volume-off'
+  }
   // so on and so forth for each possible label in StudySpace Entities
 } as const
 
 type Label = keyof typeof LABEL_DISPLAY
 
-export {
-  LABEL_DISPLAY,
-  Label
-}
+export { LABEL_DISPLAY, Label }

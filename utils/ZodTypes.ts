@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { LABEL_DISPLAY, Label } from './labels'
 
 const Page = z.object({
   limit: z.number(),
@@ -27,7 +28,7 @@ const Rooms = z.object({
   room: z.string(),
   access_notes: z.string(),
   images: z.array(z.string()),
-  labels: z.array(z.string()),
+  labels: z.array(z.custom<Label>()),
   capacity: z.number(),
   last_edited: z.string().datetime(),
   __v: z.number()
