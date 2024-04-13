@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { LABEL_DISPLAY, Label } from './labels'
+import { Label } from './labels'
 
 const Page = z.object({
   limit: z.number(),
