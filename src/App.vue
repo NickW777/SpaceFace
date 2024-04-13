@@ -4,9 +4,10 @@ import RoomDetail from '../components/detail/RoomDetail.vue'
 import { useRoomStore } from '../store/rooms'
 import { storeToRefs } from 'pinia'
 import { fetchData } from '../utils/query'
+import { defineAsyncComponent } from 'vue'
 
 const roomStore = useRoomStore()
-const { showDetail } = storeToRefs(roomStore)
+const { showDetail, appStarted } = storeToRefs(roomStore)
 
 const initialize = () => {
   fetchData('').then((data) => roomStore.storePage(data))
@@ -15,19 +16,13 @@ initialize()
 </script>
 
 <template>
-  <template v-if="roomStore.getPage(0).rooms">
-    <div>
-      <Transition :name="showDetail ? 'in' : 'out'">
-        <RoomDetail v-if="showDetail" />
-        <MainMenu v-else />
-      </Transition>
-    </div>
-  </template>
-  <template v-else>
-    <div>
-      <h1>Loading...</h1>
-    </div>
-  </template>
+  <div v-if="appStarted">
+    <Transition :name="showDetail ? 'in' : 'out'">
+      <RoomDetail v-if="showDetail" />
+      <MainMenu v-else />
+    </Transition>
+  </div>
+  <h1 v-else>Loading...</h1>
 </template>
 
 <style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import { useTimeAgo } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoomStore } from '../../store/rooms'
