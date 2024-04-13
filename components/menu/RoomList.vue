@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import RoomCard from './RoomCard.vue'
-import { useRoomStore } from '../../store/rooms';
-import { storeToRefs } from 'pinia';
+import { useRoomStore } from '../../store/rooms'
+import { storeToRefs } from 'pinia'
 
 const roomStore = useRoomStore()
-const { showDetail } = storeToRefs(roomStore)
+const { getPage } = storeToRefs(roomStore)
 </script>
 
 <template>
   <div class="flex flex-wrap items-center justify-center overflow-auto py-3 px-2">
-    <div
-      v-for="i in 100"
-      :key="i"
-      class="w-1/2 px-1 pb-2"
-    >
+    <div v-for="i in 100" :key="i" class="w-1/2 px-1 pb-2">
+      <h1 class="text-2xl font-bold text-center">{{ getPage(0) }}</h1>
       <RoomCard
-        @click.stop="showDetail = true"
+        @click.stop="roomStore.toggleDetail()"
         building="ILC"
         room="N151"
         thumbnail="/images/ILC.jpeg"

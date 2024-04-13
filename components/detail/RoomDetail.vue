@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useTimeAgo } from '@vueuse/core'
-import { storeToRefs } from 'pinia';
-import { useRoomStore } from '../../store/rooms';
+import { storeToRefs } from 'pinia'
+import { useRoomStore } from '../../store/rooms'
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
 import BackNavigate from '../detail/BackNavigate.vue'
@@ -39,11 +39,8 @@ const editRoom = () => {
 </script>
 
 <template>
-  <div
-    class="w-screen h-screen"
-  >
-
-    <BackNavigate @click.stop="showDetail = false" />
+  <div class="w-screen h-screen">
+    <BackNavigate @click.stop="roomStore.toggleDetail()" />
 
     <!-- images carousel - implement this with swiper.js! -->
     <RoomImageDisplay
@@ -58,39 +55,24 @@ const editRoom = () => {
     <div
       class="z-50 absolute w-full h-[60%] bg-white rounded-t-xl -translate-y-[10px] p-4 overflow-auto"
     >
-
       <div class="px-2 flex justify-between">
-
         <!-- title content -->
         <div>
-
           <!-- labels -->
           <div class="flex gap-1 py-2">
-            <RoomLabel
-              v-for="label in labels"
-              :key="label"
-              :label="label"
-            />
+            <RoomLabel v-for="label in labels" :key="label" :label="label" />
           </div>
 
           <!-- title -->
-          <h1 class="text-5xl font-bold">
-            ILC N151
-          </h1>
+          <h1 class="text-5xl font-bold">ILC N151</h1>
 
           <!-- availability -->
-          <span class="text-2xl font-light">
-            Study Here Until 10pm
-          </span>
-
+          <span class="text-2xl font-light"> Study Here Until 10pm </span>
         </div>
 
         <!-- large action buttons -->
         <div class="flex flex-col gap-2">
-          <LargeCircularButton
-            icon="map-outline"
-            class="bg-study-space-light text-white"
-          />
+          <LargeCircularButton icon="map-outline" class="bg-study-space-light text-white" />
 
           <LargeCircularButton
             @click.stop="favorite = !favorite"
@@ -98,7 +80,6 @@ const editRoom = () => {
             class="bg-favorite text-white"
           />
         </div>
-
       </div>
 
       <!-- availability detail -->
@@ -108,33 +89,22 @@ const editRoom = () => {
       />
 
       <div class="px-2 mb-10">
-
         <!-- additional info -->
         <div class="my-8 flex justify-between">
           <div class="text-2xl font-semibold">
-            <div>
-              Capacity
-            </div>
-            <div class="font-light">
-              200
-            </div>
+            <div>Capacity</div>
+            <div class="font-light">200</div>
           </div>
 
           <div class="text-2xl font-semibold text-right">
-            <div>
-              Last Edited
-            </div>
+            <div>Last Edited</div>
             <div class="font-light capitalize">
               {{ lastEdited }}
             </div>
           </div>
         </div>
 
-        <RectButton
-          @click.stop="editRoom"
-          class="bg-blue-500 text-white w-full mb-2"
-          icon="pencil"
-        >
+        <RectButton @click.stop="editRoom" class="bg-blue-500 text-white w-full mb-2" icon="pencil">
           Edit This Room
         </RectButton>
 
@@ -146,18 +116,11 @@ const editRoom = () => {
           >
             Feedback
           </RectButton>
-          <RectButton
-            @click.stop="fileIssue('issue')"
-            icon="alert"
-            class="bg-red-500 text-white"
-          >
+          <RectButton @click.stop="fileIssue('issue')" icon="alert" class="bg-red-500 text-white">
             Report Issue
           </RectButton>
         </div>
-
       </div>
-
     </div>
-
   </div>
 </template>

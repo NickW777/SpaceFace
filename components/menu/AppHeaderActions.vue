@@ -2,6 +2,9 @@
 import { ref, watch, computed } from 'vue'
 import { executeTransition, useDebounceFn, useFetch } from '@vueuse/core'
 import MultiSelect from '../shared/MultiSelect.vue'
+import { useRoomStore } from '../../store/rooms'
+
+const roomStore = useRoomStore()
 
 const options = [
   { value: 1, label: 'map-marker-outline' },
@@ -37,7 +40,7 @@ async function fetchData(q: string | null) {
 watch(
   searchText,
   useDebounceFn(() => {
-    console.log(fetchData(searchText.value).then((data) => console.log(data.value)))
+    fetchData(searchText.value).then((data) => console.log(data))
   }, 2000)
 )
 </script>
