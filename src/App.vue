@@ -15,19 +15,19 @@ initialize()
 </script>
 
 <template>
-  <Suspense>
-    <template #default>
-      <div>
-        <Transition :name="showDetail ? 'in' : 'out'">
-          <RoomDetail v-if="showDetail" />
-          <MainMenu v-else />
-        </Transition>
-      </div>
-    </template>
-    <template #fallback>
-      <div>Loading...</div>
-    </template>
-  </Suspense>
+  <template v-if="roomStore.getPage(0).rooms">
+    <div>
+      <Transition :name="showDetail ? 'in' : 'out'">
+        <RoomDetail v-if="showDetail" />
+        <MainMenu v-else />
+      </Transition>
+    </div>
+  </template>
+  <template v-else>
+    <div>
+      <h1>Loading...</h1>
+    </div>
+  </template>
 </template>
 
 <style>
