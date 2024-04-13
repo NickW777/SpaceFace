@@ -18,7 +18,7 @@ const LABEL_DISPLAY = {
   },
   ACCESSIBLE: {
     color: 'bg-green-600',
-    icon: 'wheelchair-accessibility-outline'
+    icon: 'wheelchair'
   },
   BAD_TEMP: {
     color: 'bg-yellow-600',
