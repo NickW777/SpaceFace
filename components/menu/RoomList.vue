@@ -8,13 +8,10 @@ const roomStore = useRoomStore()
 <template>
   <div class="flex flex-wrap items-center justify-center overflow-auto py-3 px-2">
     <div v-for="i in roomStore.getPage(0).rooms.length" :key="i" class="w-1/2 px-1 pb-2">
-      <h1 class="text-2xl font-bold text-center">
-        {{ roomStore.getPage(0).rooms[i - 1].room }}
-      </h1>
       <RoomCard
         @click.stop="roomStore.toggleDetail()"
         building="ILC"
-        room="N151"
+        :room="roomStore.getPage(0).rooms[i - 1].room"
         thumbnail="/images/ILC.jpeg"
         availability="Available For Another 3 Hours (Until 5pm)"
         :labels="['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD']"
