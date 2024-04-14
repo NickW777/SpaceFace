@@ -8,8 +8,7 @@ type Option<T> = {
 defineProps<{
   modelValue: T,
   options: Option<T>[] | readonly Option<T>[],
-  type?: 'icon' | 'text',
-  padding?: string | number
+  type?: 'icon' | 'text'
 }>()
 
 const emits = defineEmits<{
@@ -20,7 +19,7 @@ const emits = defineEmits<{
 
 <template>
   <div
-    class="flex items-center justify-between bg-white rounded-full p-1 h-8"
+    class="flex items-center justify-between bg-white rounded-full p-1 h-8 overflow-auto"
   >
     <button
       v-for="(option, i) in options"
@@ -29,9 +28,11 @@ const emits = defineEmits<{
       :class="[
         option.value === modelValue ? 'text-white' : 'text-black',
         option.value === modelValue ? 'bg-study-space-light' : 'bg-white',
-        `px-${padding ?? 5}`,
+        `w-[${100 / options.length}%]`,
+        'min-w-12',
+        'h-7',
         'rounded-full',
-        'h-7'
+        'grid place-items-center',
       ]"
     >
       <mdicon
