@@ -75,7 +75,6 @@ defineProps<{
         v-model="selectedDay"
         :options="DAYS_OF_WEEK"
         class="mt-4"
-        padding="3"
       />
 
     </div>
