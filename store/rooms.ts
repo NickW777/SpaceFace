@@ -55,13 +55,16 @@ export const useRoomStore = defineStore('rooms', {
     },
 
     storeRoomAvailability(b: BlockMapType | null) {
-      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       if (b === null) return
-
-      b.Blocks[days[4]].sort(function (a, b) {
-        return a[0] - b[0]
-      })
+      // const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      // for (let i = 0; i < 7; i++) {
+      //   b.Blocks[days[i]].sort(function (a, b) {
+      //     return a[0] - b[0]
+      //   })
+      // }
+      //Store the room availability in a map for easy access
       this.roomAvailability[b.building_code + '_' + b.room_code] = b
+      //Tell the app the data is available to display
       this.roomAvailabilityLoading = false
     },
 
