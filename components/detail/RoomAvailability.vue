@@ -4,6 +4,8 @@ import MultiSelect from '../shared/MultiSelect.vue'
 import { BlockMap, BlockMapType } from '../../utils/ZodTypes'
 
 import { useCounter } from '../../composables/counter'
+import { useRoomStore } from '../../store/rooms'
+const roomStore = useRoomStore()
 
 const { count, increment, double } = useCounter(20)
 const counter2 = useCounter(15)
@@ -20,7 +22,7 @@ const DAYS_OF_WEEK = [
 
 type Day = (typeof DAYS_OF_WEEK)[number]['value']
 
-const selectedDay = ref<Day>('Sun')
+const selectedDay = ref<Day>('Mon')
 
 const props = defineProps<{
   availability: BlockMapType
@@ -47,13 +49,16 @@ const props = defineProps<{
       <MultiSelect v-model="selectedDay" :options="DAYS_OF_WEEK" />
       <!-- come up with design and fill in with data computed from block map -->
       <!-- this may be a new component -->
+
       <div
+        v-if="!roomStore.isLoadingRoomAvailability"
         v-for="i in props.availability.Blocks[selectedDay].length"
         :key="i"
         class="h-12 w-full bg-gray-300 rounded-xl"
       >
         {{ props.availability.Blocks[selectedDay][i - 1] }}
       </div>
+      <div v-else>Loading...</div>
 
       <!-- <button @click="increment" class="bg-gray-800 p-3 text-white font-bold text-2xl">
         {{ count }} - {{ double }}

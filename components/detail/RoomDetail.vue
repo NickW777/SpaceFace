@@ -12,7 +12,6 @@ import RectButton from '../shared/RectButton.vue'
 import { fetchBlockMap } from '../../utils/query'
 
 const roomStore = useRoomStore()
-const { showDetail } = storeToRefs(roomStore)
 
 const favorite = ref(false)
 

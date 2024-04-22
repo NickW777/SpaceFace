@@ -15,7 +15,8 @@ export const useRoomStore = defineStore('rooms', {
       //Each entry in this array is a page of results from SpaceProvider
       currQueryResults: [] as SpaceProviderType[],
 
-      roomAvailability: [] as BlockMapType[]
+      roomAvailability: [] as BlockMapType[],
+      roomAvailabilityLoading: ref(false)
     }
   },
 
@@ -30,6 +31,10 @@ export const useRoomStore = defineStore('rooms', {
 
     getRoomAvailability: (state) => {
       return (room: string) => state.roomAvailability[room]
+    },
+
+    isLoadingRoomAvailability: (state) => {
+      return state.roomAvailabilityLoading
     }
   },
 
@@ -50,8 +55,18 @@ export const useRoomStore = defineStore('rooms', {
     },
 
     storeRoomAvailability(b: BlockMapType | null) {
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       if (b === null) return
+
+      b.Blocks[days[4]].sort(function (a, b) {
+        return a[0] - b[0]
+      })
       this.roomAvailability[b.building_code + '_' + b.room_code] = b
+      this.roomAvailabilityLoading = false
+    },
+
+    startLoadingRoomAvailability() {
+      this.roomAvailabilityLoading = true
     }
   }
 })
