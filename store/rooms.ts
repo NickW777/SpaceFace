@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { SpaceProviderType } from '../utils/ZodTypes'
+import { BlockMapType, SpaceProviderType } from '../utils/ZodTypes'
+import RoomAvailability from '../components/detail/RoomAvailability.vue'
 
 export const useRoomStore = defineStore('rooms', {
   state: () => {
@@ -12,7 +13,9 @@ export const useRoomStore = defineStore('rooms', {
       //getting the next page so we can reset results
       currQuery: ref(new String()),
       //Each entry in this array is a page of results from SpaceProvider
-      currQueryResults: [] as SpaceProviderType[]
+      currQueryResults: [] as SpaceProviderType[],
+
+      roomAvailability: [] as BlockMapType[]
     }
   },
 
@@ -23,6 +26,10 @@ export const useRoomStore = defineStore('rooms', {
 
     getPageCount: (state) => {
       return () => state.currQueryResults.length
+    },
+
+    getRoomAvailability: (state) => {
+      return (room: string) => state.roomAvailability[room]
     }
   },
 
@@ -40,6 +47,11 @@ export const useRoomStore = defineStore('rooms', {
       }
       this.currQueryResults.push(s)
       this.appStarted = true
+    },
+
+    storeRoomAvailability(b: BlockMapType | null) {
+      if (b === null) return
+      this.roomAvailability[b.building_code + '_' + b.room_code] = b
     }
   }
 })

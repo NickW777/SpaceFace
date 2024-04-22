@@ -2,6 +2,7 @@
 import RoomCard from './RoomCard.vue'
 import { useRoomStore } from '../../store/rooms'
 import { storeToRefs } from 'pinia'
+import { fetchBlockMap } from '../../utils/query'
 
 const roomStore = useRoomStore()
 const { appStarted } = storeToRefs(roomStore)
@@ -16,7 +17,10 @@ const { appStarted } = storeToRefs(roomStore)
       class="w-1/2 px-1 pb-2"
     >
       <RoomCard
-        @click.stop="roomStore.toggleDetail()"
+        @click.stop="
+          roomStore.toggleDetail(),
+            fetchBlockMap('BART_0065').then((data) => roomStore.storeRoomAvailability(data))
+        "
         :building="roomStore.getPage(0).rooms[i - 1].building"
         :room="roomStore.getPage(0).rooms[i - 1].room"
         thumbnail="/images/ILC.jpeg"

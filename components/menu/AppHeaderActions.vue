@@ -3,7 +3,7 @@ import { ref, watch, Ref } from 'vue'
 import { useDebounceFn, useFetch } from '@vueuse/core'
 import MultiSelect from '../shared/MultiSelect.vue'
 import { useRoomStore } from '../../store/rooms'
-import { fetchData } from '../../utils/query'
+import { fetchSpaceProvider } from '../../utils/query'
 
 const roomStore = useRoomStore()
 
@@ -33,7 +33,7 @@ watch(searchActive, (isActive) => {
 watch(
   searchText,
   useDebounceFn(() => {
-    fetchData(searchText.value).then((data) => roomStore.storePage(data))
+    fetchSpaceProvider(searchText.value).then((data) => roomStore.storePage(data))
   }, 2000)
 )
 </script>
