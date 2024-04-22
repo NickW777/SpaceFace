@@ -4,7 +4,7 @@ const props = defineProps<{
   end: number
 }>()
 
-function formatTime(time: number) {
+function formatTime(time: number): string {
   let min = ('' + time).slice(-2)
   let hr = ('' + time).slice(0, -2)
   let cat = ''
@@ -30,7 +30,7 @@ const endTime = formatTime(props.end)
 
 <template>
   <div class="h-10 w-full bg-red-400 rounded-xl">
-    <h1 class="center">{{ startTime }} to {{ endTime }}</h1>
+    <h1 class="center font-semibold">{{ startTime }} to {{ endTime }}</h1>
   </div>
 </template>
 

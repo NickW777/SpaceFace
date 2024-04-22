@@ -18,9 +18,15 @@ const { appStarted } = storeToRefs(roomStore)
     >
       <RoomCard
         @click.stop="
-          roomStore.toggleDetail(),
-            roomStore.startLoadingRoomAvailability(),
-            fetchBlockMap('BART_0065').then((data) => roomStore.storeRoomAvailability(data))
+          () => {
+            //Open the room detail view
+            roomStore.toggleDetail()
+            //Don't query Blockmap if that room has already been queried
+            if (roomStore.getRoomAvailability('BART_0065') === undefined) {
+              roomStore.startLoadingRoomAvailability()
+              fetchBlockMap('BART_0065').then((data) => roomStore.storeRoomAvailability(data))
+            }
+          }
         "
         :building="roomStore.getPage(0).rooms[i - 1].building"
         :room="roomStore.getPage(0).rooms[i - 1].room"

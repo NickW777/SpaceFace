@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import MultiSelect from '../shared/MultiSelect.vue'
 import CalendarBlock from './CalendarBlock.vue'
-import { BlockMap, BlockMapType } from '../../utils/ZodTypes'
+import { BlockMapType } from '../../utils/ZodTypes'
 
 import { useCounter } from '../../composables/counter'
 import { useRoomStore } from '../../store/rooms'
