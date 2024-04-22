@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import MultiSelect from '../shared/MultiSelect.vue'
+import CalendarBlock from './CalendarBlock.vue'
 import { BlockMap, BlockMapType } from '../../utils/ZodTypes'
 
 import { useCounter } from '../../composables/counter'
@@ -54,9 +55,11 @@ const props = defineProps<{
         v-if="!roomStore.isLoadingRoomAvailability"
         v-for="i in props.availability.Blocks[selectedDay].length"
         :key="i"
-        class="h-12 w-full bg-gray-300 rounded-xl"
       >
-        {{ props.availability.Blocks[selectedDay][i - 1] }}
+        <CalendarBlock
+          :start="props.availability.Blocks[selectedDay][i - 1][0]"
+          :end="props.availability.Blocks[selectedDay][i - 1][1]"
+        />
       </div>
       <div v-else>Loading...</div>
 
