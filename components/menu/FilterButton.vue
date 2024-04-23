@@ -4,13 +4,14 @@ import LargeCircularButton from '../shared/LargeCircularButton.vue'
 import RoomLabel from '../shared/RoomLabel.vue'
 import { Label, LABEL_DISPLAY } from '../../utils/labels'
 import { useRoomStore } from '../../store/rooms';
+import { fetchData } from '../../utils/query'
 
 // Filter menu active/inactive
 const filterActive = ref(false);
 
 // Gets array for storing toggled room labels from Pinia
 const roomStore = useRoomStore();
-const isLabelToggled = (index: number) => computed(() => roomStore.toggledLabels.includes(index));
+const isLabelToggled = (label: string) => computed(() => roomStore.toggledLabels.includes(label));
 </script>
 
 <template>
@@ -19,12 +20,12 @@ const isLabelToggled = (index: number) => computed(() => roomStore.toggledLabels
     <Transition>
       <div v-if="filterActive" class="bg-study-space-light rounded-full">
         <RoomLabel
-          v-for="(label, index) in Object.keys(LABEL_DISPLAY)"
+          v-for="label in Object.keys(LABEL_DISPLAY)"
           :key = "label"
           :label = "label"
-          :class="isLabelToggled(index).value ? '' : 'bg-black'"
+          :class="isLabelToggled(label).value ? '' : 'bg-black'"
           class="m-2"
-          @click.stop="roomStore.toggleLabel(index)"
+          @click.stop="roomStore.toggleLabel(label)"
         />
       </div>
     </Transition>

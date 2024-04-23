@@ -15,7 +15,7 @@ export const useRoomStore = defineStore('rooms', {
       currQueryResults: [] as SpaceProviderType[],
 
       // Stores the labels that have been toggled in Filter Menu
-      toggledLabels: [] as number[]
+      toggledLabels: [] as string[]
     }
   },
 
@@ -45,10 +45,10 @@ export const useRoomStore = defineStore('rooms', {
       this.appStarted = true
     },
 
-    toggleLabel(index: number) {
-      const currentIndex = this.toggledLabels.indexOf(index);
+    toggleLabel(label: string) {
+      const currentIndex = this.toggledLabels.indexOf(label);
       if (currentIndex == -1) {
-        this.toggledLabels.push(index);
+        this.toggledLabels.push(label);
       } else {
         this.toggledLabels.splice(currentIndex, 1);
       }
