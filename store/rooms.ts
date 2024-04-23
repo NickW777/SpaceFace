@@ -12,7 +12,10 @@ export const useRoomStore = defineStore('rooms', {
       //getting the next page so we can reset results
       currQuery: ref(new String()),
       //Each entry in this array is a page of results from SpaceProvider
-      currQueryResults: [] as SpaceProviderType[]
+      currQueryResults: [] as SpaceProviderType[],
+
+      // Stores the labels that have been toggled in Filter Menu
+      toggledLabels: [] as number[]
     }
   },
 
@@ -40,6 +43,15 @@ export const useRoomStore = defineStore('rooms', {
       }
       this.currQueryResults.push(s)
       this.appStarted = true
+    },
+
+    toggleLabel(index: number) {
+      const currentIndex = this.toggledLabels.indexOf(index);
+      if (currentIndex == -1) {
+        this.toggledLabels.push(index);
+      } else {
+        this.toggledLabels.splice(currentIndex, 1);
+      }
     }
   }
 })
