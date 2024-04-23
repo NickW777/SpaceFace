@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { SpaceProviderType } from '../utils/ZodTypes'
+import { BlockMapType, SpaceProviderType } from '../utils/ZodTypes'
+import RoomAvailability from '../components/detail/RoomAvailability.vue'
 
 export const useRoomStore = defineStore('rooms', {
   state: () => {
@@ -14,8 +15,13 @@ export const useRoomStore = defineStore('rooms', {
       //Each entry in this array is a page of results from SpaceProvider
       currQueryResults: [] as SpaceProviderType[],
 
+
+      roomAvailability: [] as BlockMapType[],
+      roomAvailabilityLoading: ref(false)
+
       // Stores the labels that have been toggled in Filter Menu
       toggledLabels: [] as string[]
+
     }
   },
 
@@ -26,6 +32,14 @@ export const useRoomStore = defineStore('rooms', {
 
     getPageCount: (state) => {
       return () => state.currQueryResults.length
+    },
+
+    getRoomAvailability: (state) => {
+      return (room: string) => state.roomAvailability[room]
+    },
+
+    isLoadingRoomAvailability: (state) => {
+      return state.roomAvailabilityLoading
     }
   },
 
@@ -45,6 +59,19 @@ export const useRoomStore = defineStore('rooms', {
       this.appStarted = true
     },
 
+
+    storeRoomAvailability(b: BlockMapType | null) {
+      if (b === null) return
+      console.log(`Storing ${b} from BlockMap`)
+      //Store the room availability in a map for easy access
+      this.roomAvailability[b.building_code + '_' + b.room_code] = b
+      //Tell the app the data is available to display
+      this.roomAvailabilityLoading = false
+    },
+
+    startLoadingRoomAvailability() {
+      this.roomAvailabilityLoading = true
+
     toggleLabel(label: string) {
       const currentIndex = this.toggledLabels.indexOf(label);
       if (currentIndex == -1) {
@@ -52,6 +79,7 @@ export const useRoomStore = defineStore('rooms', {
       } else {
         this.toggledLabels.splice(currentIndex, 1);
       }
+
     }
   }
 })

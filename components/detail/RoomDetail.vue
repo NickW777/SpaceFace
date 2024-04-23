@@ -9,9 +9,9 @@ import BackNavigate from '../detail/BackNavigate.vue'
 import RoomAvailability from './RoomAvailability.vue'
 import RoomImageDisplay from './RoomImageDisplay.vue'
 import RectButton from '../shared/RectButton.vue'
+import { fetchBlockMap } from '../../utils/query'
 
 const roomStore = useRoomStore()
-const { showDetail } = storeToRefs(roomStore)
 
 const favorite = ref(false)
 
@@ -75,14 +75,11 @@ const googleMaps = () => {
 
         <!-- large action buttons -->
         <div class="flex flex-col gap-2">
-
           <LargeCircularButton
-           @click.stop="googleMaps"
+            @click.stop="googleMaps"
             icon="map-outline"
             class="bg-study-space-light text-white"
-            
           />
-
 
           <LargeCircularButton
             @click.stop="favorite = !favorite"
@@ -94,7 +91,7 @@ const googleMaps = () => {
 
       <!-- availability detail -->
       <RoomAvailability
-        availability="replace me with some data from block map!"
+        :availability="roomStore.getRoomAvailability('BART_0065')"
         class="mt-[90px]"
       />
 
