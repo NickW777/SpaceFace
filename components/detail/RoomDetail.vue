@@ -20,6 +20,7 @@ const capacity = roomDetails.capacity
 const lastEdited = roomDetails.last_edited
 const room = roomDetails.building + ' ' + roomDetails.room
 const images = roomDetails.images
+const gps_coords = roomDetails.gps_coords
 
 const fileIssue = (type: 'issue' | 'feedback') => {
   const title = type === 'issue' ? 'Report Issue' : 'Feedback'
@@ -37,7 +38,10 @@ const editRoom = () => {
   window.open(`https://spaceprovider.up.railway.app/admin?room=${room}`, '_blank')
 }
 const googleMaps = () => {
-  window.open(`https://www.google.com/maps/@42.3937021,-72.5315629,14z?entry=ttu`, '_blank')
+  window.open(
+    `https://www.google.com/maps/search/?api=1&query=${gps_coords.coordinates[0]}%2C${gps_coords.coordinates[1]}`,
+    '_blank'
+  )
 }
 </script>
 
