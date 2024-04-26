@@ -30,7 +30,7 @@ const { appStarted } = storeToRefs(roomStore)
         "
         :building="roomStore.getPage(0).rooms[i - 1].building"
         :room="roomStore.getPage(0).rooms[i - 1].room"
-        thumbnail="/images/ILC.jpeg"
+        :thumbnail="roomStore.getPage(0).rooms[i - 1].images[0]"
         availability="Available For Another 3 Hours (Until 5pm)"
         :labels="roomStore.getPage(0).rooms[i - 1].labels"
       />
