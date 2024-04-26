@@ -7,15 +7,15 @@ import { fetchSpaceProvider } from '../../utils/query'
 
 const roomStore = useRoomStore()
 
-const options = [
-  { value: 1, label: 'map-marker-outline' },
-  { value: 2, label: 'star-outline' },
-  { value: 3, label: 'wheelchair-accessibility' }
-] as const
+// const options = [
+//   { value: 1, label: 'map-marker-outline' },
+//   { value: 2, label: 'star-outline' },
+//   { value: 3, label: 'wheelchair-accessibility' }
+// ] as const
 
-type Value = (typeof options)[number]['value']
+// type Value = (typeof options)[number]['value']
 
-const selectedFilter = ref<Value>(options[0].value)
+// const selectedFilter = ref<Value>(options[0].value)
 
 const searchActive = ref(false)
 const searchInput = ref<HTMLInputElement | null>(null)
@@ -66,7 +66,7 @@ watch(
       />
     </div>
 
-    <MultiSelect
+    <!-- <MultiSelect
       v-model="selectedFilter"
       :options="options"
       :class="[
@@ -74,7 +74,7 @@ watch(
         'transition duration-200 ease-in-out w-[200px] absolute right-0'
       ]"
       type="icon"
-    />
+    /> -->
   </div>
 </template>
 ../../utils/query
