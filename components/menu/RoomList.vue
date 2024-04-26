@@ -20,6 +20,7 @@ const { appStarted } = storeToRefs(roomStore)
         @click.stop="
           () => {
             //Open the room detail view
+            roomStore.setDetailRoom(0, i - 1)
             roomStore.toggleDetail()
             //Don't query Blockmap if that room has already been queried
             if (roomStore.getRoomAvailability('BART_0065') === undefined) {
@@ -30,7 +31,7 @@ const { appStarted } = storeToRefs(roomStore)
         "
         :building="roomStore.getPage(0).rooms[i - 1].building"
         :room="roomStore.getPage(0).rooms[i - 1].room"
-        :thumbnail="roomStore.getPage(0).rooms[i - 1].images[0]"
+        :thumbnail="roomStore.getPage(0).rooms[i - 1].images?.[0] || '/images/imageNotFound.jpg'"
         availability="Available For Another 3 Hours (Until 5pm)"
         :labels="roomStore.getPage(0).rooms[i - 1].labels"
       />

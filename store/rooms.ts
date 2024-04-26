@@ -7,6 +7,8 @@ export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
       showDetail: ref(false),
+      detailIndex: ref({ page: 0, room: 0 }),
+
       //Has the app gotten a first page of results to display
       appStarted: ref(false),
       //Keep track of the last query to determine if it changed or we're just
@@ -15,13 +17,11 @@ export const useRoomStore = defineStore('rooms', {
       //Each entry in this array is a page of results from SpaceProvider
       currQueryResults: [] as SpaceProviderType[],
 
-
       roomAvailability: [] as BlockMapType[],
       roomAvailabilityLoading: ref(false),
 
       // Stores the labels that have been toggled in Filter Menu
       toggledLabels: [] as string[]
-
     }
   },
 
@@ -40,10 +40,18 @@ export const useRoomStore = defineStore('rooms', {
 
     isLoadingRoomAvailability: (state) => {
       return state.roomAvailabilityLoading
+    },
+
+    getDetailRoom: (state) => {
+      return () => state.currQueryResults[state.detailIndex.page].rooms[state.detailIndex.room]
     }
   },
 
   actions: {
+    setDetailRoom(page: number, room: number) {
+      this.detailIndex = { page: page, room: room }
+    },
+
     toggleDetail() {
       this.showDetail = !this.showDetail
     },
@@ -59,7 +67,6 @@ export const useRoomStore = defineStore('rooms', {
       this.appStarted = true
     },
 
-
     storeRoomAvailability(b: BlockMapType | null) {
       if (b === null) return
       console.log(`Storing ${b} from BlockMap`)
@@ -74,13 +81,12 @@ export const useRoomStore = defineStore('rooms', {
     },
 
     toggleLabel(label: string) {
-      const currentIndex = this.toggledLabels.indexOf(label);
+      const currentIndex = this.toggledLabels.indexOf(label)
       if (currentIndex == -1) {
-        this.toggledLabels.push(label);
+        this.toggledLabels.push(label)
       } else {
-        this.toggledLabels.splice(currentIndex, 1);
+        this.toggledLabels.splice(currentIndex, 1)
       }
-
     }
   }
 })
