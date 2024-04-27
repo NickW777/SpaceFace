@@ -21,6 +21,10 @@ const handleFilter = () => {
         checkedLabels.value.every(label => room.labels.includes(label))
     )
 }
+
+const handleClear = () => {
+    checkedLabels.value = [];
+}
 </script>
 
 
@@ -54,8 +58,8 @@ const handleFilter = () => {
                 </div>
                 <!-- Footer -->
                 <div class="p-6 flex justify-between">
-                    <button class="p-1 bg-red-600">Clear</button>
-                    <button class="p-1 bg-green-600" @click="handleFilter">Filter</button>
+                    <button class="px-4 py-2 bg-red-600 rounded-lg" @click="handleClear">Clear</button>
+                    <button class="px-4 py-2 bg-green-600 rounded-lg" @click="handleFilter">Filter</button>
                 </div>
             </div>
         </div>
