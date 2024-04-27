@@ -18,10 +18,6 @@ export const useRoomStore = defineStore('rooms', {
 
       roomAvailability: [] as BlockMapType[],
       roomAvailabilityLoading: ref(false),
-
-      // Stores the labels that have been toggled in Filter Menu
-      toggledLabels: [] as string[]
-
     }
   },
 
@@ -71,16 +67,6 @@ export const useRoomStore = defineStore('rooms', {
 
     startLoadingRoomAvailability() {
       this.roomAvailabilityLoading = true
-    },
-
-    toggleLabel(label: string) {
-      const currentIndex = this.toggledLabels.indexOf(label);
-      if (currentIndex == -1) {
-        this.toggledLabels.push(label);
-      } else {
-        this.toggledLabels.splice(currentIndex, 1);
-      }
-
     }
   }
 })
