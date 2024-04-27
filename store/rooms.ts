@@ -1,7 +1,8 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { BlockMapType, SpaceProviderType } from '../utils/ZodTypes'
+import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
 import RoomAvailability from '../components/detail/RoomAvailability.vue'
+import { set } from '@vueuse/core'
 
 export const useRoomStore = defineStore('rooms', {
   state: () => {
@@ -15,13 +16,15 @@ export const useRoomStore = defineStore('rooms', {
       //getting the next page so we can reset results
       currQuery: ref(new String()),
       //Each entry in this array is a page of results from SpaceProvider
-      currQueryResults: [] as SpaceProviderType[],
+      currQueryResults: ref([] as SpaceProviderType[]),
 
-      roomAvailability: [] as BlockMapType[],
+      roomAvailability: ref([] as BlockMapType[]),
       roomAvailabilityLoading: ref(false),
 
       // Stores the labels that have been toggled in Filter Menu
-      toggledLabels: [] as string[]
+      toggledLabels: [] as string[],
+
+      detailImagesKey: ref(0)
     }
   },
 
@@ -65,6 +68,24 @@ export const useRoomStore = defineStore('rooms', {
       }
       this.currQueryResults.push(s)
       this.appStarted = true
+    },
+
+    storeCompleteRoom(page: number, room: number, r: RoomType) {
+      this.currQueryResults[page].rooms[room] = r
+      // set(this.currQueryResults[page].rooms, room, r)
+      // set(this.currQueryResults, page, set(this.currQueryResults[page], room, r))
+
+      // Create a copy of the current rooms
+      // const newRooms = [this.currQueryResults[page].rooms]
+
+      // // Update the room in the copied array
+      // newRooms[room] = r
+
+      // // Replace the old rooms array with the new one
+      // this.currQueryResults[page].rooms = newRooms
+
+      // console.log(this.currQueryResults[page].rooms[room])
+      // this.detailImagesKey += 1
     },
 
     storeRoomAvailability(b: BlockMapType | null) {
