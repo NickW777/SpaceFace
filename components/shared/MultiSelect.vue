@@ -55,8 +55,10 @@ const emits = defineEmits<{
         'bg-study-space',
         'rounded-full',
         'h-7',
-        `w-[calc(${100 / options.length}%-6px)]`,        'transition-all',
+        `w-[calc(${100 / options.length}%-6px)]`,
+        'transition-all',
         'duration-300',
+        'ease-out',
         `left-[calc(${(options.findIndex(o => o.value === modelValue) * (100 / options.length))}%+3px)]`,
       ]"
     ></div>

@@ -13,11 +13,21 @@
             colors: {
               'study-space': '#4E2073',
               'study-space-light': '#802BC2',
-              'favorite': '#FFCA10'
-            }
-          }
-        }
-      }
+              favorite: '#FFCA10',
+            },
+            keyframes: {
+              shimmer: {
+                '100%': {
+                  transform: 'translateX(100%)',
+                },
+              },
+            },
+            animation: {
+              shimmer: 'shimmer 2s infinite',
+            },
+          },
+        },
+      };
     </script>
     <title>
       StudySpace
