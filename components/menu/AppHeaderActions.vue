@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, watch, Ref } from 'vue'
-import { useDebounceFn, useFetch } from '@vueuse/core'
+import { ref, watch } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import MultiSelect from '../shared/MultiSelect.vue'
 import { useRoomStore } from '../../store/rooms'
 import { fetchSpaceProvider } from '../../utils/query'
@@ -64,6 +64,7 @@ watch(searchText, updateSearch)
 
       <input
         v-show="searchActive"
+        v-model="searchText"
         ref="searchInput"
         type="text"
         class="w-4/5 outline-transparent"
