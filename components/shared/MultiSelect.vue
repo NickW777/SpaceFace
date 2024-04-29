@@ -19,20 +19,22 @@ const emits = defineEmits<{
 
 <template>
   <div
-    class="flex items-center justify-between bg-white rounded-full p-1 h-8 overflow-auto"
+    class="flex items-center justify-between bg-white rounded-full h-8 overflow-auto relative"
   >
+
     <button
       v-for="(option, i) in options"
       :key="i"
       @click.stop="emits('update:modelValue', option.value)"
       :class="[
         option.value === modelValue ? 'text-white' : 'text-black',
-        option.value === modelValue ? 'bg-study-space-light' : 'bg-white',
         `w-[${100 / options.length}%]`,
-        'min-w-12',
         'h-7',
         'rounded-full',
         'grid place-items-center',
+        'z-20',
+        'transition-colors',
+        'duration-300'
       ]"
     >
       <mdicon
@@ -45,5 +47,19 @@ const emits = defineEmits<{
       </span>
 
     </button>
+
+    <!-- background color on selected -->
+    <div
+      :class="[
+        'absolute',
+        'bg-study-space',
+        'rounded-full',
+        'h-7',
+        `w-[calc(${100 / options.length}%-6px)]`,        'transition-all',
+        'duration-300',
+        `left-[calc(${(options.findIndex(o => o.value === modelValue) * (100 / options.length))}%+3px)]`,
+      ]"
+    ></div>
+
   </div>
 </template>
