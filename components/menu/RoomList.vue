@@ -9,9 +9,11 @@ const { appStarted } = storeToRefs(roomStore)
 </script>
 
 <template>
-  <div class="flex flex-wrap items-center justify-center overflow-auto py-3 px-2">
+  <div
+    v-if="appStarted"
+    class="flex flex-wrap overflow-auto py-3 px-2 relative w-full"
+  >
     <div
-      v-if="appStarted"
       v-for="i in roomStore.getPage(0).rooms.length"
       :key="i"
       class="w-1/2 px-1 pb-2"
@@ -21,7 +23,7 @@ const { appStarted } = storeToRefs(roomStore)
           () => {
             //Open the room detail view
             roomStore.toggleDetail()
-            //Don't query Blockmap if that room has already been queried
+            //Don't query BlockMap if that room has already been queried
             if (roomStore.getRoomAvailability('BART_0065') === undefined) {
               roomStore.startLoadingRoomAvailability()
               fetchBlockMap('BART_0065').then((data) => roomStore.storeRoomAvailability(data))
@@ -35,6 +37,10 @@ const { appStarted } = storeToRefs(roomStore)
         :labels="roomStore.getPage(0).rooms[i - 1].labels"
       />
     </div>
-    <div v-else>Loading...</div>
+  </div>
+  <div v-else>
+    <div class="text-2xl">
+      Loading...
+    </div>
   </div>
 </template>

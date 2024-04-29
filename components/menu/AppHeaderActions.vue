@@ -22,29 +22,32 @@ const searchInput = ref<HTMLInputElement | null>(null)
 
 const searchText = ref(null)
 
-watch(searchActive, (isActive) => {
-  if (isActive)
-    queueMicrotask(() => {
-      searchInput.value?.focus()
-    })
-})
+const focusSearchField = () => {
+  if (!searchActive.value) return
+  queueMicrotask(() => searchInput.value?.focus())
+}
 
-//Run the SpaceProvider Query after 2 sec of inactivity
-watch(
-  searchText,
-  useDebounceFn(() => {
-    fetchSpaceProvider(searchText.value).then((data) => roomStore.storePage(data))
-  }, 2000)
-)
+watch(searchActive, focusSearchField)
+
+const callAPIWithSearchQuery = async () => {
+  const data = await fetchSpaceProvider(searchText.value)
+  roomStore.storePage(data)
+}
+
+const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)
+
+watch(searchText, updateSearch)
 </script>
 
 <template>
   <div class="flex justify-between h-8">
+
     <div
       :class="[
         'bg-white text-black rounded-full flex items-center transition-all duration-300 ease-in-out flex items-center',
-        searchActive ? 'w-full' : 'w-16'
+        searchActive ? 'w-full' : 'w-16',
       ]"
+
     >
       <button
         @click.stop="searchActive = !searchActive"
@@ -53,15 +56,17 @@ watch(
           'transition-all duration-300 ease-in-out cursor-pointer'
         ]"
       >
-        <mdicon :name="searchActive ? 'chevron-left' : 'magnify'" :size="searchActive ? 28 : 24" />
+        <mdicon
+          :name="searchActive ? 'chevron-left' : 'magnify'"
+          :size="searchActive ? 28 : 24"
+        />
       </button>
 
       <input
         v-show="searchActive"
-        v-model="searchText"
         ref="searchInput"
         type="text"
-        class="w-2/3 outline-transparent"
+        class="w-4/5 outline-transparent"
         placeholder="Search"
       />
     </div>
@@ -71,10 +76,10 @@ watch(
       :options="options"
       :class="[
         !searchActive ? 'delay-100' : 'opacity-0',
-        'transition duration-200 ease-in-out w-[200px] absolute right-0'
+        'transition duration-200 ease-in-out w-[200px] right-0',
       ]"
+      style="position: absolute;"
       type="icon"
     />
   </div>
 </template>
-../../utils/query
