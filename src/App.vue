@@ -3,7 +3,7 @@ import MainMenu from '../components/menu/MainMenu.vue'
 import RoomDetail from '../components/detail/RoomDetail.vue'
 import { useRoomStore } from '../store/rooms'
 import { storeToRefs } from 'pinia'
-import { fetchSpaceProvider } from '../utils/query'
+import { fetchSpaceProvider, fetchItems } from '../utils/query'
 
 const roomStore = useRoomStore()
 const { showDetail, appStarted } = storeToRefs(roomStore)
