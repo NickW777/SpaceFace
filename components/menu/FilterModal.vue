@@ -45,8 +45,8 @@ const handleClear = () => {
                 <div class="p-6">
                     <form>
                         <div v-for="label in Object.keys(LABEL_DISPLAY)" :key="label" class="flex flex-row m-2">
-                            <input type="checkbox" :value="label" v-model="checkedLabels"/>
-                            <label class="flex flex-row">
+                            <input type="checkbox" :id="label" :value="label" v-model="checkedLabels"/>
+                            <label class="flex flex-row" :for="label">
                                 <RoomLabel
                                     :label = "label"
                                     class="mr-2 ml-2"
