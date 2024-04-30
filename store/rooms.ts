@@ -10,6 +10,7 @@ import { Label } from '../utils/labels'
 // 2. room availability should not be a value globally stored, it should be fetched on demand
 // and tied to the availability component specific to the room that is being viewed
 
+//FIXED
 // 3. why are we using the string constructor to initialize currQuery?
 
 // 4. filter options should be an object that is used to store various filter options selected by users not scattered in the room caching store
@@ -25,7 +26,7 @@ export const useRoomStore = defineStore('rooms', {
 
       //Keep track of the last query to determine if it changed or we're just
       //getting the next page so we can reset results
-      currQuery: new String(),
+      currQuery: '',
 
       //Each entry in this array is a page of results from SpaceProvider
       currQueryResults: [] as SpaceProviderType[],
