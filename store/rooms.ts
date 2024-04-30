@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { fetchSpaceProvider } from '../utils/query';
 import { BlockMapType, SpaceProviderType } from '../utils/ZodTypes'
 
 // yonas notes:
@@ -30,8 +31,8 @@ export const useRoomStore = defineStore('rooms', {
       roomAvailabilityLoading: ref(false),
 
       // Stores the labels that have been toggled in Filter Menu
-      toggledLabels: [] as string[]
-
+      toggledLabels: [] as string[],
+currentPage:0
     }
   },
 
@@ -96,6 +97,15 @@ export const useRoomStore = defineStore('rooms', {
         this.toggledLabels.splice(currentIndex, 1);
       }
 
+    },
+    async fetchNextPage() {
+      this.appStarted = true;
+      const nextPage = this.currentPage + 1;
+      const data = await fetchSpaceProvider(this.currQuery, nextPage, 20);
+      if (data && data.rooms.length > 0) {
+        this.currQueryResults.push(...data.rooms);
+        this.currentPage = nextPage;
+      }
     }
   }
 })

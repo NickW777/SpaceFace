@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted, watch} from 'vue'
 import RoomCard from './RoomCard.vue'
 import RoomCardSkeleton from './RoomCardSkeleton.vue'
 import { useRoomStore } from '../../store/rooms'
@@ -13,7 +13,9 @@ const { appStarted } = storeToRefs(roomStore)
 const loading = computed(() => !appStarted.value)
 
 // you have to clean this up. Your app shouldn't be crashing if the data is not there.
-const rooms = computed(() => roomStore?.getPage(0)?.rooms)
+const rooms = computed(() => roomStore.getPage(roomStore.getPageCount() - 1)?.rooms || []);
+const observer = ref(null);
+const lastElement = ref(null);
 
 // yonas note: this was inlined inside the template, this breaks the declarative nature of Vue. It's better to have this in the script setup
 const toggleDetail = async () => {
@@ -26,6 +28,33 @@ const toggleDetail = async () => {
     roomStore.storeRoomAvailability(data)
   }
 }
+
+const loadMoreRooms = () => {
+  if (!loading.value && roomStore.getPageCount() > 0) {
+    roomStore.fetchNextPage();
+  }
+};
+onMounted(() => {
+  observer.value = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      loadMoreRooms();
+    }
+  }, {
+    threshold: 1.0
+  });
+  if (lastElement.value) {
+    observer.value.observe(lastElement.value);
+  }
+});
+
+watch(() => lastElement.value, (newValue, oldValue) => {
+  if (oldValue) {
+    observer.value.unobserve(oldValue);
+  }
+  if (newValue) {
+    observer.value.observe(newValue);
+  }
+});
 </script>
 
 <template>
@@ -56,7 +85,7 @@ const toggleDetail = async () => {
     >
       <RoomCardSkeleton />
     </div>
-
+    <div ref="lastElement" class="w-full h-10"></div>
   </div>
 
 </template>
