@@ -6,6 +6,7 @@ import { useRoomStore } from '../../store/rooms'
 import { storeToRefs } from 'pinia'
 import { fetchBlockMap, fetchCompleteSpaceProvider } from '../../utils/query'
 import { watch } from 'vue'
+import { RoomType } from '../../utils/ZodTypes'
 
 const roomStore = useRoomStore()
 const { appStarted } = storeToRefs(roomStore)
@@ -17,8 +18,8 @@ const loading = computed(() => !appStarted.value)
 const rooms = computed(() => roomStore?.getPage(0)?.rooms)
 
 // yonas note: this was inlined inside the template, this breaks the declarative nature of Vue. It's better to have this in the script setup
-const toggleDetail = async () => {
-  roomStore.setDetailRoom(0, 1)
+const toggleDetail = async (room: RoomType) => {
+  roomStore.setDetailRoom(room)
   //Open the room detail view
   roomStore.toggleDetail()
   fetchCompleteSpaceProvider(roomStore.getPage(0).rooms[1]._id).then((data) => {
@@ -37,7 +38,7 @@ const toggleDetail = async () => {
   <div class="flex flex-wrap overflow-auto py-3 px-2 relative w-full">
     <div v-for="room in rooms" :key="room._id" class="w-1/2 px-1 pb-2">
       <RoomCard
-        @click.stop="toggleDetail"
+        @click.stop="toggleDetail(room)"
         :building="room.building"
         :room="room.room"
         :thumbnail="room.images?.[0] || '/images/imageNotFound.jpg'"

@@ -15,12 +15,11 @@ import { set } from '@vueuse/core'
 
 // 4. filter options should be an object that is used to store various filter options selected by users not scattered in the room caching store
 
-
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
       showDetail: ref(false),
-      detailIndex: ref({ page: 0, room: 0 }),
+      currDetailRoom: ref(null as RoomType),
 
       //Has the app gotten a first page of results to display
       appStarted: ref(false),
@@ -37,7 +36,6 @@ export const useRoomStore = defineStore('rooms', {
       toggledLabels: [] as string[],
 
       detailImagesKey: ref(0)
-
     }
   },
 
@@ -60,14 +58,13 @@ export const useRoomStore = defineStore('rooms', {
     },
 
     getDetailRoom: (state) => {
-      return () => state.currQueryResults[state.detailIndex.page].rooms[state.detailIndex.room]
+      return () => state.currDetailRoom
     }
   },
 
   actions: {
-
-    setDetailRoom(page: number, room: number) {
-      this.detailIndex = { page: page, room: room }
+    setDetailRoom(room: RoomType) {
+      this.currDetailRoom = room
     },
 
     // yonas note: consider making this a derived state based on whether the user has selected a room to view
@@ -117,7 +114,6 @@ export const useRoomStore = defineStore('rooms', {
     // yonas note: why are we making this a function? if we need to mutate state based on a series of actions, the logic should stay in the action
     startLoadingRoomAvailability() {
       this.roomAvailabilityLoading = true
-
     },
 
     // yonas note: label has a type, we should use that type instead of string
