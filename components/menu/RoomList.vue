@@ -5,7 +5,6 @@ import RoomCardSkeleton from './RoomCardSkeleton.vue'
 import { useRoomStore } from '../../store/rooms'
 import { storeToRefs } from 'pinia'
 import { fetchBlockMap, fetchCompleteSpaceProvider } from '../../utils/query'
-import { watch } from 'vue'
 import { RoomType } from '../../utils/ZodTypes'
 
 const roomStore = useRoomStore()
@@ -22,7 +21,8 @@ const toggleDetail = async (room: RoomType) => {
   roomStore.setDetailRoom(room)
   //Open the room detail view
   roomStore.toggleDetail()
-  fetchCompleteSpaceProvider(roomStore.getPage(0).rooms[1]._id).then((data) => {
+
+  fetchCompleteSpaceProvider(room._id).then((data) => {
     roomStore.storeCompleteRoom(0, 1, data)
   })
 

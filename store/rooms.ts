@@ -37,9 +37,7 @@ export const useRoomStore = defineStore('rooms', {
       roomAvailabilityLoading: false,
 
       // Stores the labels that have been toggled in Filter Menu
-      toggledLabels: [] as string[],
-
-      detailImagesKey: 0
+      toggledLabels: [] as string[]
     }
   },
 

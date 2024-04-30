@@ -52,7 +52,7 @@ const googleMaps = () => {
     <BackNavigate @click.stop="roomStore.toggleDetail()" />
 
     <!-- images carousel - implement this with swiper.js! -->
-    <RoomImageDisplay :images="images" :k="roomStore.detailImagesKey" />
+    <RoomImageDisplay :images="images" />
 
     <!-- popover tab -->
     <div
