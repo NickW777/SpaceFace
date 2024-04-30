@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
+import { Label } from '../utils/labels'
 import RoomAvailability from '../components/detail/RoomAvailability.vue'
 import { set } from '@vueuse/core'
 
@@ -86,20 +87,6 @@ export const useRoomStore = defineStore('rooms', {
 
     storeCompleteRoom(page: number, room: number, r: RoomType) {
       this.currQueryResults[page].rooms[room] = r
-      // set(this.currQueryResults[page].rooms, room, r)
-      // set(this.currQueryResults, page, set(this.currQueryResults[page], room, r))
-
-      // Create a copy of the current rooms
-      // const newRooms = [this.currQueryResults[page].rooms]
-
-      // // Update the room in the copied array
-      // newRooms[room] = r
-
-      // // Replace the old rooms array with the new one
-      // this.currQueryResults[page].rooms = newRooms
-
-      // console.log(this.currQueryResults[page].rooms[room])
-      // this.detailImagesKey += 1
     },
 
     storeRoomAvailability(b: BlockMapType | null) {
@@ -116,8 +103,9 @@ export const useRoomStore = defineStore('rooms', {
       this.roomAvailabilityLoading = true
     },
 
+    //FIXED
     // yonas note: label has a type, we should use that type instead of string
-    toggleLabel(label: string) {
+    toggleLabel(label: Label) {
       const currentIndex = this.toggledLabels.indexOf(label)
       if (currentIndex == -1) {
         this.toggledLabels.push(label)

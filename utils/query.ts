@@ -9,7 +9,7 @@ import {
 import { useFetch } from '@vueuse/core'
 
 //Query SpaceProvider
-export async function fetchSpaceProvider(q: string | null): Promise<SpaceProviderType | null> {
+export async function fetchSpaceProvider(q: string | null): Promise<SpaceProviderType> {
   //Make sure we don't query a null string
   if (!q) q = ''
   const { data } = await useFetch<string>(
@@ -30,7 +30,7 @@ export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> 
 }
 
 //Query BlockMap
-export async function fetchBlockMap(roomId: string | null): Promise<BlockMapType | null> {
+export async function fetchBlockMap(roomId: string | null): Promise<BlockMapType> {
   //Make sure we don't query a null string
   if (!roomId) roomId = ''
   const { data } = await useFetch<string>(

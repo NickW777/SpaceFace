@@ -14,7 +14,7 @@ const { appStarted } = storeToRefs(roomStore)
 // adding this because your loading system will eventually need to be speced out a bit more than just appStarted. Use intersection observers to indicate when new data needs to be loaded.
 const loading = computed(() => !appStarted.value)
 
-// you have to clean this up. Your app shouldn't be crashing if the data is not there.
+//TODO make it so app does not crash when data has not been loaded yet
 const rooms = computed(() => roomStore?.getPage(0)?.rooms)
 
 // yonas note: this was inlined inside the template, this breaks the declarative nature of Vue. It's better to have this in the script setup
@@ -25,6 +25,7 @@ const toggleDetail = async (room: RoomType) => {
   fetchCompleteSpaceProvider(roomStore.getPage(0).rooms[1]._id).then((data) => {
     roomStore.storeCompleteRoom(0, 1, data)
   })
+
   //Don't query BlockMap if that room has already been queried
   if (roomStore.getRoomAvailability('BART_0065') === undefined) {
     roomStore.startLoadingRoomAvailability()
