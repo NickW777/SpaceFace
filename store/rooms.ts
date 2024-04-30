@@ -1,12 +1,10 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
 import { Label } from '../utils/labels'
-import RoomAvailability from '../components/detail/RoomAvailability.vue'
-import { set } from '@vueuse/core'
 
 // yonas notes:
 
+//FIXED
 // 1. pinia automatically treats everything in returned from state as reactive
 
 // 2. room availability should not be a value globally stored, it should be fetched on demand
@@ -24,13 +22,18 @@ export const useRoomStore = defineStore('rooms', {
 
       //Has the app gotten a first page of results to display
       appStarted: false,
+
       //Keep track of the last query to determine if it changed or we're just
       //getting the next page so we can reset results
       currQuery: new String(),
+
       //Each entry in this array is a page of results from SpaceProvider
       currQueryResults: [] as SpaceProviderType[],
 
+      //Each entry in this array is a room availability calendar from BlockMap
       roomAvailability: [] as BlockMapType[],
+
+      // Store status of room availability calendar loading
       roomAvailabilityLoading: false,
 
       // Stores the labels that have been toggled in Filter Menu
