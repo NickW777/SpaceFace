@@ -7,7 +7,7 @@ const HEADER_HEIGHT_PX = 125
 
 <template>
   <div>
-    <AppHeader :class="[`h-[${HEADER_HEIGHT_PX}px]`]" />
-    <RoomList :class="[`h-[calc(100vh-${HEADER_HEIGHT_PX}px)]`]" />
+    <AppHeader :class="[`min-h-[${HEADER_HEIGHT_PX}px]`]" />
+    <RoomList :class="[`max-h-[calc(100vh-${HEADER_HEIGHT_PX}px)]`]" />
   </div>
 </template>

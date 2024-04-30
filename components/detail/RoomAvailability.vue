@@ -4,12 +4,8 @@ import MultiSelect from '../shared/MultiSelect.vue'
 import CalendarBlock from './CalendarBlock.vue'
 import { BlockMapType } from '../../utils/ZodTypes'
 
-import { useCounter } from '../../composables/counter'
 import { useRoomStore } from '../../store/rooms'
 const roomStore = useRoomStore()
-
-const { count, increment, double } = useCounter(20)
-const counter2 = useCounter(15)
 
 const DAYS_OF_WEEK = [
   { value: 'Sun', label: 'sun' },
@@ -36,7 +32,9 @@ const props = defineProps<{
   <div>
     <div class="flex justify-between items-center my-1 px-3">
       <!-- title -->
-      <h1 class="text-4xl font-semibold">Availability</h1>
+      <h1 class="text-4xl font-semibold">
+        Availability
+      </h1>
 
       <!-- emblem -->
       <span class="bg-green-500 text-white px-3 rounded-full shadow-gray-400 shadow-sm">
@@ -47,9 +45,10 @@ const props = defineProps<{
     <!-- content -->
     <div class="bg-gray-200 p-5 flex flex-col gap-3 rounded-2xl">
       <!-- select day of week -->
-      <MultiSelect v-model="selectedDay" :options="DAYS_OF_WEEK" />
-      <!-- come up with design and fill in with data computed from block map -->
-      <!-- this may be a new component -->
+      <MultiSelect
+        v-model="selectedDay"
+        :options="DAYS_OF_WEEK"
+      />
 
       <div
         v-if="!roomStore.isLoadingRoomAvailability"
@@ -61,15 +60,9 @@ const props = defineProps<{
           :end="props.availability.Blocks[selectedDay][i - 1][1]"
         />
       </div>
-      <div v-else>Loading...</div>
-
-      <!-- <button @click="increment" class="bg-gray-800 p-3 text-white font-bold text-2xl">
-        {{ count }} - {{ double }}
-      </button>
-
-      <button @click="counter2.increment" class="bg-gray-800 p-3 text-white font-bold text-2xl">
-        {{ counter2.count }}
-      </button> -->
+      <div v-else>
+        Loading...
+      </div>
     </div>
   </div>
 </template>
