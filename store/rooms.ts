@@ -1,43 +1,44 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
-import RoomAvailability from '../components/detail/RoomAvailability.vue'
-import { set } from '@vueuse/core'
+import { Label } from '../utils/labels'
 
 // yonas notes:
 
+//FIXED
 // 1. pinia automatically treats everything in returned from state as reactive
 
 // 2. room availability should not be a value globally stored, it should be fetched on demand
 // and tied to the availability component specific to the room that is being viewed
 
+//FIXED
 // 3. why are we using the string constructor to initialize currQuery?
 
 // 4. filter options should be an object that is used to store various filter options selected by users not scattered in the room caching store
 
-
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
-      showDetail: ref(false),
-      detailIndex: ref({ page: 0, room: 0 }),
+      showDetail: false,
+      currDetailRoom: null as RoomType,
 
       //Has the app gotten a first page of results to display
-      appStarted: ref(false),
+      appStarted: false,
+
       //Keep track of the last query to determine if it changed or we're just
       //getting the next page so we can reset results
-      currQuery: ref(new String()),
-      //Each entry in this array is a page of results from SpaceProvider
-      currQueryResults: ref([] as SpaceProviderType[]),
+      currQuery: '',
 
-      roomAvailability: ref([] as BlockMapType[]),
-      roomAvailabilityLoading: ref(false),
+      //Each entry in this array is a page of results from SpaceProvider
+      currQueryResults: [] as SpaceProviderType[],
+
+      //Each entry in this array is a room availability calendar from BlockMap
+      roomAvailability: [] as BlockMapType[],
+
+      // Store status of room availability calendar loading
+      roomAvailabilityLoading: false,
 
       // Stores the labels that have been toggled in Filter Menu
-      toggledLabels: [] as string[],
-
-      detailImagesKey: ref(0)
-
+      toggledLabels: [] as string[]
     }
   },
 
@@ -60,14 +61,13 @@ export const useRoomStore = defineStore('rooms', {
     },
 
     getDetailRoom: (state) => {
-      return () => state.currQueryResults[state.detailIndex.page].rooms[state.detailIndex.room]
+      return () => state.currDetailRoom
     }
   },
 
   actions: {
-
-    setDetailRoom(page: number, room: number) {
-      this.detailIndex = { page: page, room: room }
+    setDetailRoom(room: RoomType) {
+      this.currDetailRoom = room
     },
 
     // yonas note: consider making this a derived state based on whether the user has selected a room to view
@@ -89,20 +89,6 @@ export const useRoomStore = defineStore('rooms', {
 
     storeCompleteRoom(page: number, room: number, r: RoomType) {
       this.currQueryResults[page].rooms[room] = r
-      // set(this.currQueryResults[page].rooms, room, r)
-      // set(this.currQueryResults, page, set(this.currQueryResults[page], room, r))
-
-      // Create a copy of the current rooms
-      // const newRooms = [this.currQueryResults[page].rooms]
-
-      // // Update the room in the copied array
-      // newRooms[room] = r
-
-      // // Replace the old rooms array with the new one
-      // this.currQueryResults[page].rooms = newRooms
-
-      // console.log(this.currQueryResults[page].rooms[room])
-      // this.detailImagesKey += 1
     },
 
     storeRoomAvailability(b: BlockMapType | null) {
@@ -117,11 +103,11 @@ export const useRoomStore = defineStore('rooms', {
     // yonas note: why are we making this a function? if we need to mutate state based on a series of actions, the logic should stay in the action
     startLoadingRoomAvailability() {
       this.roomAvailabilityLoading = true
-
     },
 
+    //FIXED
     // yonas note: label has a type, we should use that type instead of string
-    toggleLabel(label: string) {
+    toggleLabel(label: Label) {
       const currentIndex = this.toggledLabels.indexOf(label)
       if (currentIndex == -1) {
         this.toggledLabels.push(label)

@@ -1,22 +1,9 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
-import { watch, getCurrentInstance } from 'vue'
 const props = defineProps<{
   images: string[]
-  k: number
 }>()
-
-const show: boolean = props.k > 0
-// console.log(show)
-// console.log(props.k)
-// watch(
-//   () => props.images.length,
-//   (newVal, oldVal) => {
-//     console.log(`k changed from ${oldVal} to ${newVal}`)
-//   }
-// )
-// console.log(props.images.length)
 </script>
 
 <template>
@@ -25,5 +12,4 @@ const show: boolean = props.k > 0
       <img :src="image" class="w-full h-full object-cover" />
     </SwiperSlide>
   </Swiper>
-  {{ k }}
 </template>
