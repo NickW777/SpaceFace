@@ -28,10 +28,6 @@ export const useRoomStore = defineStore('rooms', {
 
       roomAvailability: [] as BlockMapType[],
       roomAvailabilityLoading: ref(false),
-
-      // Stores the labels that have been toggled in Filter Menu
-      toggledLabels: [] as string[]
-
     }
   },
 
@@ -85,6 +81,7 @@ export const useRoomStore = defineStore('rooms', {
     // yonas note: why are we making this a function? if we need to mutate state based on a series of actions, the logic should stay in the action
     startLoadingRoomAvailability() {
       this.roomAvailabilityLoading = true
+
     },
 
     // yonas note: label has a type, we should use that type instead of string
@@ -95,7 +92,6 @@ export const useRoomStore = defineStore('rooms', {
       } else {
         this.toggledLabels.splice(currentIndex, 1);
       }
-
     }
   }
 })
