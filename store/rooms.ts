@@ -19,24 +19,24 @@ import { set } from '@vueuse/core'
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
-      showDetail: ref(false),
-      currDetailRoom: ref(null as RoomType),
+      showDetail: false,
+      currDetailRoom: null as RoomType,
 
       //Has the app gotten a first page of results to display
-      appStarted: ref(false),
+      appStarted: false,
       //Keep track of the last query to determine if it changed or we're just
       //getting the next page so we can reset results
-      currQuery: ref(new String()),
+      currQuery: new String(),
       //Each entry in this array is a page of results from SpaceProvider
-      currQueryResults: ref([] as SpaceProviderType[]),
+      currQueryResults: [] as SpaceProviderType[],
 
-      roomAvailability: ref([] as BlockMapType[]),
-      roomAvailabilityLoading: ref(false),
+      roomAvailability: [] as BlockMapType[],
+      roomAvailabilityLoading: false,
 
       // Stores the labels that have been toggled in Filter Menu
       toggledLabels: [] as string[],
 
-      detailImagesKey: ref(0)
+      detailImagesKey: 0
     }
   },
 
