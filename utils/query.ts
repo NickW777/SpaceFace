@@ -1,4 +1,11 @@
-import { SpaceProviderType, SpaceProvider, BlockMapType, BlockMap } from './ZodTypes'
+import {
+  Room,
+  RoomType,
+  SpaceProviderType,
+  SpaceProvider,
+  BlockMapType,
+  BlockMap
+} from './ZodTypes'
 import { useFetch } from '@vueuse/core'
 
 //Query SpaceProvider
@@ -10,6 +17,16 @@ export async function fetchSpaceProvider(q: string | null): Promise<SpaceProvide
   ).get()
   // if (!data) throw new Error('No data found')
   return SpaceProvider.parse(JSON.parse(data.value ?? ''))
+}
+
+export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
+  if (!id) id = ''
+
+  const { data } = await useFetch<string>(
+    `https://spaceprovider.up.railway.app/api/v1?_id=${id}`
+  ).get()
+  // if (!data) throw new Error('No data found')
+  return Room.parse(JSON.parse(data.value ?? ''))
 }
 
 //Query BlockMap

@@ -4,7 +4,8 @@ import RoomCard from './RoomCard.vue'
 import RoomCardSkeleton from './RoomCardSkeleton.vue'
 import { useRoomStore } from '../../store/rooms'
 import { storeToRefs } from 'pinia'
-import { fetchBlockMap } from '../../utils/query'
+import { fetchBlockMap, fetchCompleteSpaceProvider } from '../../utils/query'
+import { watch } from 'vue'
 
 const roomStore = useRoomStore()
 const { appStarted } = storeToRefs(roomStore)
@@ -38,11 +39,25 @@ const toggleDetail = async () => {
     >
 
       <RoomCard
-        @click.stop="toggleDetail"
-        :building="room.building"
-        :room="room.room"
-        :labels="room.labels"
-        thumbnail="/images/ILC.jpeg"
+        @click.stop="
+          () => {
+            //Choose the room and open the room detail view
+            roomStore.setDetailRoom(0, i - 1)
+            roomStore.toggleDetail()
+            fetchCompleteSpaceProvider(roomStore.getPage(0).rooms[i - 1]._id).then((data) => {
+              roomStore.storeCompleteRoom(0, i - 1, data)
+            })
+
+            //Don't query Blockmap if that room has already been queried
+            if (roomStore.getRoomAvailability('BART_0065') === undefined) {
+              roomStore.startLoadingRoomAvailability()
+              fetchBlockMap('BART_0065').then((data) => roomStore.storeRoomAvailability(data))
+            }
+          }
+        "
+        :building="roomStore.getPage(0).rooms[i - 1].building"
+        :room="roomStore.getPage(0).rooms[i - 1].room"
+        :thumbnail="roomStore.getPage(0).rooms[i - 1].images?.[0] || '/images/imageNotFound.jpg'"
         availability="Available For Another 3 Hours (Until 5pm)"
       />
 

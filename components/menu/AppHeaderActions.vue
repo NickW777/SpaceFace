@@ -22,6 +22,7 @@ const focusSearchField = () => {
   queueMicrotask(() => searchInput.value?.focus())
 }
 
+
 watch(searchActive, focusSearchField)
 
 const callAPIWithSearchQuery = async () => {
@@ -68,6 +69,7 @@ watch(searchText, updateSearch)
         placeholder="Search"
       />
     </div>
+
     
     <!-- Filter Button -->
     <button 
@@ -77,6 +79,7 @@ watch(searchText, updateSearch)
 
         'transition duration-200 ease-in-out absolute right-0',
       ]"
+
       @click.stop="filterActive = !filterActive"
     >
       <mdicon name="filter" :size="searchActive ? 28 : 24" />

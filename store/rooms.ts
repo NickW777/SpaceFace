@@ -1,6 +1,8 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { BlockMapType, SpaceProviderType } from '../utils/ZodTypes'
+import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
+import RoomAvailability from '../components/detail/RoomAvailability.vue'
+import { set } from '@vueuse/core'
 
 // yonas notes:
 
@@ -13,21 +15,29 @@ import { BlockMapType, SpaceProviderType } from '../utils/ZodTypes'
 
 // 4. filter options should be an object that is used to store various filter options selected by users not scattered in the room caching store
 
+
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
       showDetail: ref(false),
+      detailIndex: ref({ page: 0, room: 0 }),
+
       //Has the app gotten a first page of results to display
       appStarted: ref(false),
       //Keep track of the last query to determine if it changed or we're just
       //getting the next page so we can reset results
       currQuery: ref(new String()),
       //Each entry in this array is a page of results from SpaceProvider
-      currQueryResults: [] as SpaceProviderType[],
+      currQueryResults: ref([] as SpaceProviderType[]),
 
-
-      roomAvailability: [] as BlockMapType[],
+      roomAvailability: ref([] as BlockMapType[]),
       roomAvailabilityLoading: ref(false),
+
+      // Stores the labels that have been toggled in Filter Menu
+      toggledLabels: [] as string[],
+
+      detailImagesKey: ref(0)
+
     }
   },
 
@@ -47,10 +57,19 @@ export const useRoomStore = defineStore('rooms', {
 
     isLoadingRoomAvailability: (state) => {
       return state.roomAvailabilityLoading
+    },
+
+    getDetailRoom: (state) => {
+      return () => state.currQueryResults[state.detailIndex.page].rooms[state.detailIndex.room]
     }
   },
 
   actions: {
+
+    setDetailRoom(page: number, room: number) {
+      this.detailIndex = { page: page, room: room }
+    },
+
     // yonas note: consider making this a derived state based on whether the user has selected a room to view
     toggleDetail() {
       this.showDetail = !this.showDetail
@@ -68,6 +87,23 @@ export const useRoomStore = defineStore('rooms', {
       this.appStarted = true
     },
 
+    storeCompleteRoom(page: number, room: number, r: RoomType) {
+      this.currQueryResults[page].rooms[room] = r
+      // set(this.currQueryResults[page].rooms, room, r)
+      // set(this.currQueryResults, page, set(this.currQueryResults[page], room, r))
+
+      // Create a copy of the current rooms
+      // const newRooms = [this.currQueryResults[page].rooms]
+
+      // // Update the room in the copied array
+      // newRooms[room] = r
+
+      // // Replace the old rooms array with the new one
+      // this.currQueryResults[page].rooms = newRooms
+
+      // console.log(this.currQueryResults[page].rooms[room])
+      // this.detailImagesKey += 1
+    },
 
     storeRoomAvailability(b: BlockMapType | null) {
       if (b === null) return
@@ -86,11 +122,11 @@ export const useRoomStore = defineStore('rooms', {
 
     // yonas note: label has a type, we should use that type instead of string
     toggleLabel(label: string) {
-      const currentIndex = this.toggledLabels.indexOf(label);
+      const currentIndex = this.toggledLabels.indexOf(label)
       if (currentIndex == -1) {
-        this.toggledLabels.push(label);
+        this.toggledLabels.push(label)
       } else {
-        this.toggledLabels.splice(currentIndex, 1);
+        this.toggledLabels.splice(currentIndex, 1)
       }
     }
   }
