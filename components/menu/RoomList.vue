@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted, watch} from 'vue'
 import RoomCard from './RoomCard.vue'
 import RoomCardSkeleton from './RoomCardSkeleton.vue'
 import { useRoomStore } from '../../store/rooms'
@@ -13,8 +13,12 @@ const { appStarted } = storeToRefs(roomStore)
 // adding this because your loading system will eventually need to be speced out a bit more than just appStarted. Use intersection observers to indicate when new data needs to be loaded.
 const loading = computed(() => !appStarted.value)
 
-//TODO make it so app does not crash when data has not been loaded yet
-const rooms = computed(() => roomStore?.getPage(0)?.rooms)
+
+// you have to clean this up. Your app shouldn't be crashing if the data is not there.
+const rooms = computed(() => roomStore.getPage(roomStore.getPageCount() - 1)?.rooms || []);
+const observer = ref(null);
+const lastElement = ref(null);
+
 
 // yonas note: this was inlined inside the template, this breaks the declarative nature of Vue. It's better to have this in the script setup
 const toggleDetail = async (room: RoomType) => {
@@ -33,6 +37,33 @@ const toggleDetail = async (room: RoomType) => {
     roomStore.storeRoomAvailability(data)
   }
 }
+
+const loadMoreRooms = () => {
+  if (!loading.value && roomStore.getPageCount() > 0) {
+    roomStore.fetchNextPage();
+  }
+};
+onMounted(() => {
+  observer.value = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      loadMoreRooms();
+    }
+  }, {
+    threshold: 1.0
+  });
+  if (lastElement.value) {
+    observer.value.observe(lastElement.value);
+  }
+});
+
+watch(() => lastElement.value, (newValue, oldValue) => {
+  if (oldValue) {
+    observer.value.unobserve(oldValue);
+  }
+  if (newValue) {
+    observer.value.observe(newValue);
+  }
+});
 </script>
 
 <template>
@@ -51,5 +82,6 @@ const toggleDetail = async (room: RoomType) => {
     <div v-if="loading" v-for="i in 50" :key="i" class="w-1/2 px-1 pb-2">
       <RoomCardSkeleton />
     </div>
+    <div ref="lastElement" class="w-full h-10"></div>
   </div>
 </template>
