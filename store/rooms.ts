@@ -26,7 +26,7 @@ export const useRoomStore = defineStore('rooms', {
 
       //Keep track of the last query to determine if it changed or we're just
       //getting the next page so we can reset results
-      currQuery: '',
+      currQuery: new String(),
 
       //Each entry in this array is a page of results from SpaceProvider
       currQueryResults: [] as SpaceProviderType[],
