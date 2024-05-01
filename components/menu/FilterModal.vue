@@ -17,7 +17,7 @@ const roomStore = useRoomStore();
 const allRooms = [] as SpaceProviderType[];
 
 const handleFilter = () => {
-    roomStore.currQueryResults[0].rooms = roomStore.currQueryResults[0].rooms.filter(room => 
+    roomStore.currQueryResults[0].rooms = roomStore.currQueryResultsCopy[0].rooms.filter(room => 
         checkedLabels.value.every(label => room.labels.includes(label))
     )
 }
