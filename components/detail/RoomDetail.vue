@@ -17,7 +17,7 @@ const favorite = ref(false)
 const labels = roomDetails.labels
 const capacity = roomDetails.capacity
 const lastEdited = roomDetails.last_edited
-const room = roomDetails.building + ' ' + roomDetails.room
+const room = roomDetails.building + '-' + roomDetails.room
 const images = roomDetails.images
 const gps_coords = roomDetails.gps_coords
 
