@@ -21,12 +21,7 @@ const handleFilter = () => {
         checkedLabels.value.every(label => room.labels.includes(label))
     )
 }
-
-const handleClear = () => {
-    checkedLabels.value = [];
-}
 </script>
-
 
 <template>
     <div v-if="isVisible">
@@ -45,7 +40,7 @@ const handleClear = () => {
                 <div class="p-6">
                     <form>
                         <div v-for="label in Object.keys(LABEL_DISPLAY)" :key="label" class="flex flex-row m-2">
-                            <input type="checkbox" :id="label" :value="label" v-model="checkedLabels"/>
+                            <input type="checkbox" :id="label" :value="label" v-model="checkedLabels" @change="handleFilter"/>
                             <label class="flex flex-row" :for="label">
                                 <RoomLabel
                                     :label = "label"
@@ -55,11 +50,6 @@ const handleClear = () => {
                             </label>
                         </div>
                     </form>
-                </div>
-                <!-- Footer -->
-                <div class="p-6 flex justify-between">
-                    <button class="px-4 py-2 bg-red-600 rounded-lg" @click="handleClear">Clear</button>
-                    <button class="px-4 py-2 bg-green-600 rounded-lg" @click="handleFilter">Filter</button>
                 </div>
             </div>
         </div>
