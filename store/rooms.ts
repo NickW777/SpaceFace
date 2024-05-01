@@ -88,7 +88,7 @@ currentPage:0
         this.currQueryResults = new Array<SpaceProviderType>()
         this.currQueryResultsCopy = new Array<SpaceProviderType>()
         this.currQuery.value = s.options.query
-      }
+      }  
       this.currQueryResults.push(s)
       let deepCopy = JSON.parse(JSON.stringify(s));
       this.currQueryResultsCopy.push(deepCopy);

@@ -10,11 +10,21 @@ import { useFetch } from '@vueuse/core'
 
 //Query SpaceProvider
 export async function fetchSpaceProvider(query: string, page: number, limit: number) {
-  console.log(`Fetching SpaceProvider with query: ${q}`)
+  // console.log(`Fetching SpaceProvider with query: ${query}`)
   
-  const url = `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=${limit}`;
-  const { data, error } = useFetch(url).get();
-  if (error.value) throw new Error('Failed to load data');
+  // const url = `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=${limit}`;
+  // const { data, error } = useFetch<string>(url).get().json();
+  // if (error.value) throw new Error('Failed to load data');
+  // // return SpaceProvider.parse(JSON.parse(data.value ?? ''))
+  // console.log(data.value)
+  // return data.value;
+
+  console.log(`Fetching SpaceProvider with query: ${query}`)
+
+  const { data } = await useFetch<string>(
+    `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=10`
+  ).get()
+
   return SpaceProvider.parse(JSON.parse(data.value ?? ''))
 }
 
