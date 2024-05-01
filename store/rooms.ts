@@ -28,6 +28,8 @@ export const useRoomStore = defineStore('rooms', {
 
       roomAvailability: [] as BlockMapType[],
       roomAvailabilityLoading: ref(false),
+
+      currQueryResultsCopy: [] as SpaceProviderType[],
     }
   },
 
@@ -62,9 +64,12 @@ export const useRoomStore = defineStore('rooms', {
       //If the the current query isn't the same as the last one, reset the cached pages
       if (s.options.query != this.currQuery.value) {
         this.currQueryResults = new Array<SpaceProviderType>()
+        this.currQueryResultsCopy = new Array<SpaceProviderType>()
         this.currQuery.value = s.options.query
       }
       this.currQueryResults.push(s)
+      let deepCopy = JSON.parse(JSON.stringify(s));
+      this.currQueryResultsCopy.push(deepCopy);
       this.appStarted = true
     },
 
