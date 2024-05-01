@@ -23,7 +23,7 @@ const toggleDetail = async (room: RoomType) => {
   roomStore.toggleDetail()
 
   fetchCompleteSpaceProvider(room._id).then((data) => {
-    roomStore.storeCompleteRoom(0, 1, data)
+    // roomStore.storeCompleteRoom(0, 1, data)
   })
 
   //Don't query BlockMap if that room has already been queried
