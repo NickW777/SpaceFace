@@ -18,8 +18,6 @@ const Options = z.object({
 const Gps_Coords = z.object({
   type: z.string(),
   coordinates: z.tuple([z.number(), z.number()])
-  //   lat: z.number(),
-  //   lon: z.number()
 })
 
 export const Room = z.object({

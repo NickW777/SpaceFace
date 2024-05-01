@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useTimeAgo } from '@vueuse/core'
 import { useRoomStore } from '../../store/rooms'
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
@@ -43,8 +42,6 @@ const googleMaps = () => {
     '_blank'
   )
 }
-
-// console.log(roomStore.detailImagesKey)
 </script>
 
 <template>
