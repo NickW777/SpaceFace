@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { defineAsyncComponent, ref } from 'vue'
+import { ref } from 'vue'
 import { useTimeAgo } from '@vueuse/core'
-import { storeToRefs } from 'pinia'
 import { useRoomStore } from '../../store/rooms'
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
@@ -9,17 +8,19 @@ import BackNavigate from '../detail/BackNavigate.vue'
 import RoomAvailability from './RoomAvailability.vue'
 import RoomImageDisplay from './RoomImageDisplay.vue'
 import RectButton from '../shared/RectButton.vue'
-import { fetchBlockMap } from '../../utils/query'
 
 const roomStore = useRoomStore()
 
+const roomDetails = roomStore.getDetailRoom()
+
 const favorite = ref(false)
 
-const labels = ['OUTLETS', 'NO_OUTLETS', 'WHITEBOARD', 'CHALKBOARD'] as const
-
-// replace this with last_edited from space provider
-const lastEdited = useTimeAgo(Date.now())
-const room = 'ILC-N151'
+const labels = roomDetails.labels
+const capacity = roomDetails.capacity
+const lastEdited = roomDetails.last_edited
+const room = roomDetails.building + ' ' + roomDetails.room
+const images = roomDetails.images
+const gps_coords = roomDetails.gps_coords
 
 const fileIssue = (type: 'issue' | 'feedback') => {
   const title = type === 'issue' ? 'Report Issue' : 'Feedback'
@@ -37,8 +38,13 @@ const editRoom = () => {
   window.open(`https://spaceprovider.up.railway.app/admin?room=${room}`, '_blank')
 }
 const googleMaps = () => {
-  window.open(`https://www.google.com/maps/@42.3937021,-72.5315629,14z?entry=ttu`, '_blank')
+  window.open(
+    `https://www.google.com/maps/search/?api=1&query=${gps_coords.coordinates[0]}%2C${gps_coords.coordinates[1]}`,
+    '_blank'
+  )
 }
+
+// console.log(roomStore.detailImagesKey)
 </script>
 
 <template>
@@ -46,13 +52,7 @@ const googleMaps = () => {
     <BackNavigate @click.stop="roomStore.toggleDetail()" />
 
     <!-- images carousel - implement this with swiper.js! -->
-    <RoomImageDisplay
-      :images="[
-        '/images/ILC.jpeg',
-        'https://www.umass.edu/cp/sites/default/files/Integrative%20Learning%20Center%20%28ILC%29_02.jpg',
-        'https://www.umass.edu/cp/sites/default/files/Integrative%20Learning%20Center%20%28ILC%29_04.jpg'
-      ]"
-    />
+    <RoomImageDisplay :images="images" />
 
     <!-- popover tab -->
     <div
@@ -67,7 +67,7 @@ const googleMaps = () => {
           </div>
 
           <!-- title -->
-          <h1 class="text-5xl font-bold">ILC N151</h1>
+          <h1 class="text-5xl font-bold">{{ room }}</h1>
 
           <!-- availability -->
           <span class="text-2xl font-light"> Study Here Until 10pm </span>
@@ -100,7 +100,7 @@ const googleMaps = () => {
         <div class="my-8 flex justify-between">
           <div class="text-2xl font-semibold">
             <div>Capacity</div>
-            <div class="font-light">200</div>
+            <div class="font-light">{{ capacity }}</div>
           </div>
 
           <div class="text-2xl font-semibold text-right">
