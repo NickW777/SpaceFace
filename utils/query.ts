@@ -20,7 +20,7 @@ export async function fetchSpaceProvider(q: string): Promise<SpaceProviderType> 
 }
 
 export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
-  console.log(`Fetching compelete SpaceProvider with id: ${id}`)
+  console.log(`Fetching complete SpaceProvider with id: ${id}`)
 
   const { data } = await useFetch<string>(
     `https://spaceprovider.up.railway.app/api/v1?_id=${id}`
