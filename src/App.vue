@@ -4,6 +4,7 @@ import RoomDetail from '../components/detail/RoomDetail.vue'
 import { useRoomStore } from '../store/rooms'
 import { storeToRefs } from 'pinia'
 import { fetchSpaceProvider } from '../utils/query'
+import { useGeolocation } from '@vueuse/core'
 
 const roomStore = useRoomStore()
 const { showDetail, appStarted } = storeToRefs(roomStore)
