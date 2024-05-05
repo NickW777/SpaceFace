@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import axios  from 'axios'
+import axios from 'axios'
 import { useRoomStore } from '../../store/rooms'
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
@@ -49,11 +49,12 @@ onMounted(async () => {
 
   const url = `https://spaceprovider.up.railway.app/api/v1?room=${currDetailRoom.value.building}-${currDetailRoom.value.room}`
 
-  const data = await axios.get(url)
-
-  if (!data?.data?.images) return console.error('No images found for this room')
-
-  currDetailRoom.value.images = data.data.images
+  await axios.get(url).then((res) => {
+    if (!res?.data?.images) return console.error('No images found for this room')
+    for (let i = 1; i < res.data.images.length; i++) {
+      currDetailRoom.value.images.push(res.data.images[i])
+    }
+  })
 })
 </script>
 
@@ -100,10 +101,7 @@ onMounted(async () => {
       </div>
 
       <!-- availability detail -->
-      <RoomAvailability
-        :availability="getRoomAvailability('BART_0065')"
-        class="mt-[90px]"
-      />
+      <RoomAvailability :availability="getRoomAvailability('BART_0065')" class="mt-[90px]" />
 
       <div class="px-2 mb-10">
         <!-- additional info -->
