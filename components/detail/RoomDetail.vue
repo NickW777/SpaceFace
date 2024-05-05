@@ -63,7 +63,7 @@ onMounted(async () => {
     <BackNavigate @click.stop="toggleDetail()" />
 
     <!-- images carousel - implement this with swiper.js! -->
-    <RoomImageDisplay :images="images" />
+    <RoomImageDisplay :images="images" notFound="/images/imageNotFound.jpg" />
 
     <!-- popover tab -->
     <div
