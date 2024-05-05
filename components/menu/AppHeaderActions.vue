@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, Ref } from 'vue'
-import { useDebounceFn, useFetch } from '@vueuse/core'
+import { useDebounceFn, useGeolocation } from '@vueuse/core'
 import { useRoomStore } from '../../store/rooms'
 import { fetchSpaceProvider } from '../../utils/query'
 import FilterModal from './FilterModal.vue'

@@ -19,7 +19,9 @@ const DAYS_OF_WEEK = [
 
 type Day = (typeof DAYS_OF_WEEK)[number]['value']
 
-const selectedDay = ref<Day>('Mon')
+const currentDate = new Date();
+const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat'];
+const selectedDay = ref<Day>(days[currentDate.getDay()])
 
 const props = defineProps<{
   availability: BlockMapType

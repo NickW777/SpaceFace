@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import {
   Room,
   RoomType,
@@ -9,27 +10,26 @@ import {
 import { useFetch } from '@vueuse/core'
 
 //Query SpaceProvider
-export async function fetchSpaceProvider(query: string, page: number, limit: number) {
-  // console.log(`Fetching SpaceProvider with query: ${query}`)
-  
-  // const url = `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=${limit}`;
-  // const { data, error } = useFetch<string>(url).get().json();
-  // if (error.value) throw new Error('Failed to load data');
-  // // return SpaceProvider.parse(JSON.parse(data.value ?? ''))
-  // console.log(data.value)
-  // return data.value;
 
-  console.log(`Fetching SpaceProvider with query: ${query}`)
+export async function fetchSpaceProvider(q: string): Promise<SpaceProviderType> {
+  const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  })
+
+  const lat = position.coords.latitude
+  const lon = position.coords.longitude
+
+  console.log(`Fetching SpaceProvider with query: ${q}`, `lat: ${lat}`, `lon: ${lon}`)
 
   const { data } = await useFetch<string>(
-    `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=10`
+    `https://spaceprovider.up.railway.app/api/v1?q=${q}&page=1&limit=10&lat=${lat}&lon=${lon}`
   ).get()
 
   return SpaceProvider.parse(JSON.parse(data.value ?? ''))
 }
 
 export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
-  console.log(`Fetching compelete SpaceProvider with id: ${id}`)
+  console.log(`Fetching complete SpaceProvider with id: ${id}`)
 
   const { data } = await useFetch<string>(
     `https://spaceprovider.up.railway.app/api/v1?_id=${id}`
