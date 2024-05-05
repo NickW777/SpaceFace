@@ -10,7 +10,7 @@ const roomStore = useRoomStore()
 const { showDetail, appStarted } = storeToRefs(roomStore)
 
 const initialize = () => {
-  fetchSpaceProvider('').then((data) => roomStore.storePage(data))
+  fetchSpaceProvider('', 1, 10).then((data) => roomStore.storePage(data))
 }
 initialize()
 </script>

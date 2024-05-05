@@ -10,6 +10,7 @@ import {
 import { useFetch } from '@vueuse/core'
 
 //Query SpaceProvider
+
 export async function fetchSpaceProvider(q: string): Promise<SpaceProviderType> {
   const position = await new Promise<GeolocationPosition>((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject)
