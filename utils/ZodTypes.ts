@@ -18,11 +18,9 @@ const Options = z.object({
 const Gps_Coords = z.object({
   type: z.string(),
   coordinates: z.tuple([z.number(), z.number()])
-  //   lat: z.number(),
-  //   lon: z.number()
 })
 
-const Rooms = z.object({
+export const Room = z.object({
   gps_coords: Gps_Coords,
   _id: z.string(),
   building: z.string(),
@@ -35,10 +33,12 @@ const Rooms = z.object({
   __v: z.number()
 })
 
+export type RoomType = z.infer<typeof Room>
+
 export const SpaceProvider = z.object({
   page: Page,
   options: Options,
-  rooms: z.array(Rooms)
+  rooms: z.array(Room)
 })
 
 export type SpaceProviderType = z.infer<typeof SpaceProvider>

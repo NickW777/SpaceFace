@@ -1,21 +1,50 @@
-import { SpaceProviderType, SpaceProvider, BlockMapType, BlockMap } from './ZodTypes'
+import {
+  Room,
+  RoomType,
+  SpaceProviderType,
+  SpaceProvider,
+  BlockMapType,
+  BlockMap
+} from './ZodTypes'
 import { useFetch } from '@vueuse/core'
 
 //Query SpaceProvider
 export async function fetchSpaceProvider(query: string, page: number, limit: number) {
-  const url = `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=${limit}`;
-  const { data, error } = useFetch(url).get().json();
-  if (error.value) throw new Error('Failed to load data');
-  return data.value;
+  // console.log(`Fetching SpaceProvider with query: ${query}`)
+  
+  // const url = `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=${limit}`;
+  // const { data, error } = useFetch<string>(url).get().json();
+  // if (error.value) throw new Error('Failed to load data');
+  // // return SpaceProvider.parse(JSON.parse(data.value ?? ''))
+  // console.log(data.value)
+  // return data.value;
+
+  console.log(`Fetching SpaceProvider with query: ${query}`)
+
+  const { data } = await useFetch<string>(
+    `https://spaceprovider.up.railway.app/api/v1?q=${query}&page=${page}&limit=10`
+  ).get()
+
+  return SpaceProvider.parse(JSON.parse(data.value ?? ''))
+}
+
+export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
+  console.log(`Fetching compelete SpaceProvider with id: ${id}`)
+
+  const { data } = await useFetch<string>(
+    `https://spaceprovider.up.railway.app/api/v1?_id=${id}`
+  ).get()
+
+  return Room.parse(JSON.parse(data.value ?? ''))
 }
 
 //Query BlockMap
-export async function fetchBlockMap(roomId: string | null): Promise<BlockMapType | null> {
-  //Make sure we don't query a null string
-  if (!roomId) roomId = ''
+export async function fetchBlockMap(roomId: string): Promise<BlockMapType> {
+  console.log(`Fetching BlockMap with roomId: ${roomId}`)
+
   const { data } = await useFetch<string>(
     `https://blockmap.onrender.com/room?roomId=${roomId}`
   ).get()
-  // if (!data) throw new Error('No data found')
+
   return BlockMap.parse(JSON.parse(data.value ?? ''))
 }
