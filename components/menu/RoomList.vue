@@ -21,11 +21,12 @@ const toggleDetail = async (room: RoomType) => {
   roomStore.setDetailRoom(room)
   //Open the room detail view
   roomStore.toggleDetail()
-
+  const code = `${room.building}_${room.room}`
+  console.log(`${code} clicked`)
   //Don't query BlockMap if that room has already been queried
-  if (roomStore.getRoomAvailability('BART_0065') === undefined) {
+  if (roomStore.getRoomAvailability(code) === undefined) {
     roomStore.startLoadingRoomAvailability()
-    const data = await fetchBlockMap('BART_0065')
+    const data = await fetchBlockMap(code)
     roomStore.storeRoomAvailability(data)
   }
 }
