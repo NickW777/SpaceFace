@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import axios from 'axios'
 import { useRoomStore } from '../../store/rooms'
 import RoomLabel from '../shared/RoomLabel.vue'
 import LargeCircularButton from '../shared/LargeCircularButton.vue'
@@ -8,18 +10,17 @@ import RoomAvailability from './RoomAvailability.vue'
 import RoomImageDisplay from './RoomImageDisplay.vue'
 import RectButton from '../shared/RectButton.vue'
 
-const roomStore = useRoomStore()
-
-const roomDetails = roomStore.getDetailRoom()
+const { currDetailRoom } = storeToRefs(useRoomStore())
+const { toggleDetail, getRoomAvailability } = useRoomStore()
 
 const favorite = ref(false)
 
-const labels = roomDetails.labels
-const capacity = roomDetails.capacity
-const lastEdited = roomDetails.last_edited
-const room = roomDetails.building + ' ' + roomDetails.room
-const images = roomDetails.images
-const gps_coords = roomDetails.gps_coords
+const labels = currDetailRoom.value.labels
+const capacity = currDetailRoom.value.capacity
+const lastEdited = new Date(currDetailRoom.value.last_edited).toLocaleDateString()
+const room = currDetailRoom.value.building + ' ' + currDetailRoom.value.room
+const images = currDetailRoom.value.images
+const gps_coords = currDetailRoom.value.gps_coords
 
 const fileIssue = (type: 'issue' | 'feedback') => {
   const title = type === 'issue' ? 'Report Issue' : 'Feedback'
@@ -42,14 +43,27 @@ const googleMaps = () => {
     '_blank'
   )
 }
+
+onMounted(async () => {
+  if (currDetailRoom.value.images.length > 1) return console.log('Images already loaded')
+
+  const url = `https://spaceprovider.up.railway.app/api/v1?room=${currDetailRoom.value.building}-${currDetailRoom.value.room}`
+
+  await axios.get(url).then((res) => {
+    if (!res?.data?.images) return console.error('No images found for this room')
+    for (let i = 1; i < res.data.images.length; i++) {
+      currDetailRoom.value.images.push(res.data.images[i])
+    }
+  })
+})
 </script>
 
 <template>
   <div class="w-screen h-screen">
-    <BackNavigate @click.stop="roomStore.toggleDetail()" />
+    <BackNavigate @click.stop="toggleDetail()" />
 
     <!-- images carousel - implement this with swiper.js! -->
-    <RoomImageDisplay :images="images" />
+    <RoomImageDisplay :images="images" notFound="/images/imageNotFound.jpg" />
 
     <!-- popover tab -->
     <div
@@ -87,10 +101,13 @@ const googleMaps = () => {
       </div>
 
       <!-- availability detail -->
+
       <RoomAvailability
-        :availability="roomStore.getRoomAvailability('BART_0065')"
+        :building="currDetailRoom.building"
+        :room="currDetailRoom.room"
         class="mt-[90px]"
       />
+
 
       <div class="px-2 mb-10">
         <!-- additional info -->
