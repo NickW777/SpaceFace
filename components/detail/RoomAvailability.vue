@@ -1,11 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { BlockMapType } from '../../utils/ZodTypes'
 import MultiSelect from '../shared/MultiSelect.vue'
 import CalendarBlock from './CalendarBlock.vue'
-import { BlockMapType } from '../../utils/ZodTypes'
+import { getBlock } from './getBlock'
 
 import { useRoomStore } from '../../store/rooms'
 const roomStore = useRoomStore()
+
+const blockData = ref<BlockMapType>({
+  building_code: '',
+  room_code: '',
+  Blocks: {
+    Sun: [],
+    Mon: [],
+    Tue: [],
+    Wed: [],
+    Thu: [],
+    Fri: [],
+    Sat: []
+  }
+})
+
+const block = computed(() => blockData.value['Blocks'])
+
+const loading = ref(false)
 
 const DAYS_OF_WEEK = [
   { value: 'Sun', label: 'sun' },
@@ -17,17 +36,25 @@ const DAYS_OF_WEEK = [
   { value: 'Sat', label: 'sat' }
 ] as const
 
-type Day = (typeof DAYS_OF_WEEK)[number]['value']
-
 const currentDate = new Date();
-const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat'];
-const selectedDay = ref<Day>(days[currentDate.getDay()])
+const days = DAYS_OF_WEEK.map(({ value }) => value)
+const selectedDay = ref(days[currentDate.getDay()])
 
 const props = defineProps<{
-  availability: BlockMapType
-  // take a prop that contains data from block map corresponding to the room
-  // this will need to get parsed out a bit
+  building: string,
+  room: string,
 }>()
+
+onMounted(async () => {
+  loading.value = true
+  const blockFetchRes = await getBlock(props.building, props.room)
+  if ('ERROR' in blockFetchRes) {
+    loading.value = false
+    return
+  }
+  blockData.value = blockFetchRes
+  loading.value = false
+})
 </script>
 
 <template>
@@ -53,18 +80,24 @@ const props = defineProps<{
       />
 
       <div
-        v-if="!roomStore.isLoadingRoomAvailability"
-        v-for="i in props.availability.Blocks[selectedDay].length"
-        :key="i"
+        v-if="block[selectedDay]"
+        v-for="[start, end] in block[selectedDay]"
+        :key="start"
       >
         <CalendarBlock
-          :start="props.availability.Blocks[selectedDay][i - 1][0]"
-          :end="props.availability.Blocks[selectedDay][i - 1][1]"
+          :start="start"
+          :end="end"
         />
       </div>
-      <div v-else>
+
+      <div v-if="loading">
         Loading...
       </div>
+
+      <div v-else-if="block[selectedDay].length === 0">
+        Nothing is blocking this room on {{ selectedDay.toLowerCase() }}
+      </div>
+
     </div>
   </div>
 </template>

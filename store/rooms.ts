@@ -20,11 +20,15 @@ import { fetchSpaceProvider } from '../utils/query';
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
+
+      rooms: [] as RoomType[],
+      hasMoreRooms: true,
+      page: 0,
+
+
+
       showDetail: false,
       currDetailRoom: null as RoomType,
-
-      //Has the app gotten a first page of results to display
-      appStarted: false,
 
       //Keep track of the last query to determine if it changed or we're just
       //getting the next page so we can reset results
@@ -75,62 +79,8 @@ currentPage:0
       this.currDetailRoom = room
     },
 
-    // yonas note: consider making this a derived state based on whether the user has selected a room to view
     toggleDetail() {
       this.showDetail = !this.showDetail
     },
-
-    // yonas note: can we use a more descriptive name for this function and the parameter?
-    storePage(s: SpaceProviderType | null) {
-      if (s === null) return
-      //If the the current query isn't the same as the last one, reset the cached pages
-      if (s.options.query != this.currQuery.value) {
-        this.currQueryResults = new Array<SpaceProviderType>()
-        this.currQueryResultsCopy = new Array<SpaceProviderType>()
-        this.currQuery.value = s.options.query
-      }  
-      this.currQueryResults.push(s)
-      let deepCopy = JSON.parse(JSON.stringify(s));
-      this.currQueryResultsCopy.push(deepCopy);
-      this.appStarted = true
-    },
-
-    storeCompleteRoom(page: number, room: number, r: RoomType) {
-      this.currQueryResults[page].rooms[room] = r
-    },
-
-    storeRoomAvailability(b: BlockMapType | null) {
-      if (b === null) return
-      console.log(`Storing ${b} from BlockMap`)
-      //Store the room availability in a map for easy access
-      this.roomAvailability[b.building_code + '_' + b.room_code] = b
-      //Tell the app the data is available to display
-      this.roomAvailabilityLoading = false
-    },
-
-    // yonas note: why are we making this a function? if we need to mutate state based on a series of actions, the logic should stay in the action
-    startLoadingRoomAvailability() {
-      this.roomAvailabilityLoading = true
-    },
-
-    //FIXED
-    // yonas note: label has a type, we should use that type instead of string
-    toggleLabel(label: Label) {
-      const currentIndex = this.toggledLabels.indexOf(label)
-      if (currentIndex == -1) {
-        this.toggledLabels.push(label)
-      } else {
-        this.toggledLabels.splice(currentIndex, 1)
-      }
-    },
-    async fetchNextPage() {
-      this.appStarted = true;
-      const nextPage = this.currentPage + 1;
-      const data = await fetchSpaceProvider(this.currQuery, nextPage, 20);
-      if (data && data.rooms.length > 0) {
-        this.currQueryResults.push(...data.rooms);
-        this.currentPage = nextPage;
-      }
-    }
   }
 })

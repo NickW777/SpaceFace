@@ -101,7 +101,13 @@ onMounted(async () => {
       </div>
 
       <!-- availability detail -->
-      <RoomAvailability :availability="getRoomAvailability('BART_0065')" class="mt-[90px]" />
+
+      <RoomAvailability
+        :building="currDetailRoom.building"
+        :room="currDetailRoom.room"
+        class="mt-[90px]"
+      />
+
 
       <div class="px-2 mb-10">
         <!-- additional info -->
