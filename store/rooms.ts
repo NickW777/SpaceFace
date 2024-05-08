@@ -80,6 +80,7 @@ export const useRoomStore = defineStore('rooms', {
     },
 
     startNewQuery(query: string) {
+      this.page = 0
       this.currQuery = query
       this.rooms = []
     }
