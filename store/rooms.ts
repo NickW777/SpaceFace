@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
 import { Label } from '../utils/labels'
-import { fetchSpaceProvider } from '../utils/query';
-
+import { fetchSpaceProvider } from '../utils/query'
 
 // yonas notes:
 
@@ -20,12 +19,9 @@ import { fetchSpaceProvider } from '../utils/query';
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
-
       rooms: [] as RoomType[],
       hasMoreRooms: true,
       page: 0,
-
-
 
       showDetail: false,
       currDetailRoom: null as RoomType,
@@ -47,7 +43,7 @@ export const useRoomStore = defineStore('rooms', {
 
       // Stores the labels that have been toggled in Filter Menu
       toggledLabels: [] as string[],
-currentPage:0
+      currentPage: 0
     }
   },
 
@@ -82,5 +78,10 @@ currentPage:0
     toggleDetail() {
       this.showDetail = !this.showDetail
     },
+
+    startNewQuery(query: string) {
+      this.currQuery = query
+      this.rooms = []
+    }
   }
 })

@@ -23,8 +23,7 @@ const focusSearchField = () => {
 watch(searchActive, focusSearchField)
 
 const callAPIWithSearchQuery = async () => {
-  const data = await fetchSpaceProvider(searchText.value, 1, 10)// Assuming fetchSpaceProvider now requires additional pagination parameters
-  roomStore.storePage(data)
+  roomStore.startNewQuery(searchText.value)
 }
 
 const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)
