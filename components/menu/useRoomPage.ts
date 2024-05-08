@@ -6,7 +6,7 @@ import { fetchSpaceProvider } from '../../utils/query'
 // const SPACE_PROVIDER_URI = `https://spaceprovider.up.railway.app/api/v1`
 
 export const useRoomPage = <K extends HTMLElement | null>(bar: Ref<K>) => {
-  const { rooms, hasMoreRooms, page, currQuery } = storeToRefs(useRoomStore())
+  const { rooms, hasMoreRooms, page, currQuery, currFilters } = storeToRefs(useRoomStore())
 
   const loading = ref(false)
 
@@ -15,7 +15,7 @@ export const useRoomPage = <K extends HTMLElement | null>(bar: Ref<K>) => {
     loading.value = true
     // const rawResponse = await fetch(SPACE_PROVIDER_URI + `?page=${++page.value}&limit=10`)
     // const response = await rawResponse.json()
-    const response = await fetchSpaceProvider(currQuery.value.toString(), ++page.value)
+    const response = await fetchSpaceProvider(currQuery.value.toString(), currFilters.value, ++page.value)
     const { page: paginationData, rooms: newRooms } = response
     hasMoreRooms.value = !paginationData.last_page
     rooms.value.push(...newRooms)

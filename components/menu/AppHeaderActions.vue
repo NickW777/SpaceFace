@@ -12,23 +12,26 @@ const searchActive = ref(false)
 const searchInput = ref<HTMLInputElement | null>(null)
 const searchText = ref('')
 
-// Filter Button stuff
-const filterActive = ref(false)
-
+// Puts cursor in search bar when search is active
 const focusSearchField = () => {
   if (!searchActive.value) return
   queueMicrotask(() => searchInput.value?.focus())
 }
-
 watch(searchActive, focusSearchField)
 
+// Two seconds after searchText is modified,
+// update currQuery to searchText in pinia,
+// clear rooms in pinia.
+// This causes the intersection handler to make a new query
 const callAPIWithSearchQuery = async () => {
-  roomStore.startNewQuery(searchText.value)
+  roomStore.currQuery = searchText.value;
+  roomStore.clearRooms();
 }
-
 const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)
-
 watch(searchText, updateSearch)
+
+// Filter Button stuff
+const filterActive = ref(false)
 </script>
 
 <template>

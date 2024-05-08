@@ -17,6 +17,8 @@ export const useRoomStore = defineStore('rooms', {
       //getting the next page so we can reset results
       currQuery: new String(),
 
+      currFilters: [] as string[],
+
       //Each entry in this array is a room availability calendar from BlockMap
       roomAvailability: [] as BlockMapType[],
 
@@ -49,9 +51,8 @@ export const useRoomStore = defineStore('rooms', {
       this.showDetail = !this.showDetail
     },
 
-    startNewQuery(query: string) {
+    clearRooms() {
       this.page = 0
-      this.currQuery = query
       this.rooms = []
     }
   }
