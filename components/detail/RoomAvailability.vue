@@ -55,6 +55,9 @@ onMounted(async () => {
   blockData.value = blockFetchRes
   loading.value = false
 })
+
+
+
 </script>
 
 <template>
