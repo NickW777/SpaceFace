@@ -15,12 +15,9 @@ const roomStore = useRoomStore();
 
 
 const handleFilter = () => {
-    
-    // for (let i=0; i<roomStore.currQueryResults.length; i++) {
-    //     roomStore.currQueryResults[i].rooms = roomStore.currQueryResultsCopy[i].rooms.filter(room => 
-    //         checkedLabels.value.every(label => room.labels.includes(label))
-    //     )
-    // }
+    roomStore.rooms = roomStore.roomsCopy.filter(room => 
+        checkedLabels.value.every(label => room.labels.includes(label))
+    )
 }
 </script>
 

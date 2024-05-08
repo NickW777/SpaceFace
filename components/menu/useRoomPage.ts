@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 const SPACE_PROVIDER_URI = `https://spaceprovider.up.railway.app/api/v1`
 
 export const useRoomPage = <K extends HTMLElement | null>(bar: Ref<K>) => {
-  const { rooms, hasMoreRooms, page } = storeToRefs(useRoomStore())
+  const { rooms, roomsCopy, hasMoreRooms, page } = storeToRefs(useRoomStore())
 
   const loading = ref(false)
 
@@ -17,6 +17,7 @@ export const useRoomPage = <K extends HTMLElement | null>(bar: Ref<K>) => {
     const { page: paginationData, rooms: newRooms } = response
     hasMoreRooms.value = !paginationData.last_page
     rooms.value.push(...newRooms)
+    roomsCopy.value.push(...newRooms)
     loading.value = false
   }
 

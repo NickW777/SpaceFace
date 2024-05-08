@@ -8,6 +8,7 @@ export const useRoomStore = defineStore('rooms', {
     return {
 
       rooms: [] as RoomType[],
+      roomsCopy: [] as RoomType[],
       hasMoreRooms: true,
       page: 0,
       showDetail: false,
