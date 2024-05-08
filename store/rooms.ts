@@ -2,14 +2,12 @@ import { defineStore } from 'pinia'
 import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
 import { Label } from '../utils/labels'
 
-import { fetchSpaceProvider } from '../utils/query';
-
+import { fetchSpaceProvider } from '../utils/query'
 
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
       rooms: [] as RoomType[],
-      roomsCopy: [] as RoomType[],
       hasMoreRooms: true,
       page: 0,
       showDetail: false,
@@ -23,12 +21,11 @@ export const useRoomStore = defineStore('rooms', {
       roomAvailability: [] as BlockMapType[],
 
       // Store status of room availability calendar loading
-      roomAvailabilityLoading: false,
+      roomAvailabilityLoading: false
     }
   },
 
   getters: {
-
     // yonas note: consider localizing to RoomAvailability component
     getRoomAvailability: (state) => {
       return (room: string) => state.roomAvailability[room]
