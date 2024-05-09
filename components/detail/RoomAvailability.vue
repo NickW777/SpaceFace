@@ -56,8 +56,8 @@ onMounted(async () => {
   loading.value = false
 
   // Set room availability every second
-  updateIsReady;
-  setInterval(updateIsReady, 3000)
+  updateIsReady();
+  setInterval(updateIsReady, 60000)
 })
 
 // Ref for room availability
@@ -66,7 +66,7 @@ const isReady = ref(false)
 // Updates isReady
 function updateIsReady() {
   if (roomStore.showDetail) {
-    isReady.value = isAvailable(blockData);
+    isReady.value = isAvailable(blockData.value);
   }
 }
 </script>
