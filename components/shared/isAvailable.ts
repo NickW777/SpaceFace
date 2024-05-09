@@ -20,16 +20,18 @@ export const isAvailable = (blockData:BlockMapType):boolean => {
     const curDay = currentTime.getDay();
     const curHours = currentTime.getHours();
     const curMinutes = currentTime.getMinutes();
+    
+    // Get Current Time in correct format
     let curTime = parseInt(curHours + "" + (curMinutes<10 ? "0"+curMinutes : curMinutes));
 
-    const days = DAYS_OF_WEEK.map(({ value }) => value)
+    // Get Time Blocks of Current Day
+    const days = DAYS_OF_WEEK.map(({ value }) => value);
+    let todaysTimeBlocks = blockData.Blocks[days[curDay]];
 
-    let todaysTimeBlocks = blockData.Blocks[days[curDay]];    // This is the time blocks of the current day (is not updated on new day)
-
+    // Checks if a current time is within a class block
     for (const [startTime, endTime] of todaysTimeBlocks) {
       if (startTime <= curTime && curTime <= endTime) {
           return false;
-        
         }
     }
 
