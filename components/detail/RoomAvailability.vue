@@ -57,7 +57,7 @@ onMounted(async () => {
 
   // Set room availability every second
   updateIsReady();
-  setInterval(updateIsReady, 60000)
+  setInterval(updateIsReady, 30000)
 })
 
 // Ref for room availability
