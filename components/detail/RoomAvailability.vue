@@ -61,7 +61,7 @@ onMounted(async () => {
 })
 
 // Ref for room availability
-const isReady = ref(false)
+const isReady = ref(true)
 
 // Updates isReady
 function updateIsReady() {
