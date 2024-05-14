@@ -10,6 +10,8 @@ import {
 import { useFetch } from '@vueuse/core'
 
 //Query SpaceProvider
+const SPACE_PROVIDER_URI = "https://spaceprovider.up.railway.app/api/v1";
+const BLOCK_MAP_URI = "https://blockmap.onrender.com/room";
 
 export async function fetchSpaceProvider(q: string, page: number): Promise<SpaceProviderType> {
   // const position = await new Promise<GeolocationPosition>((resolve, reject) => {
@@ -27,7 +29,7 @@ export async function fetchSpaceProvider(q: string, page: number): Promise<Space
   // ).get()
 
   const { data } = await useFetch<string>(
-    `https://spaceprovider.up.railway.app/api/v1?q=${q}&page=${page}&limit=10`
+    `${SPACE_PROVIDER_URI}?q=${q}&page=${page}&limit=10`
   ).get()
 
   return SpaceProvider.parse(JSON.parse(data.value ?? ''))
@@ -37,7 +39,7 @@ export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> 
   console.log(`Fetching complete SpaceProvider with id: ${id}`)
 
   const { data } = await useFetch<string>(
-    `https://spaceprovider.up.railway.app/api/v1?_id=${id}`
+    `${SPACE_PROVIDER_URI}?_id=${id}`
   ).get()
 
   return Room.parse(JSON.parse(data.value ?? ''))
@@ -48,7 +50,7 @@ export async function fetchBlockMap(roomId: string): Promise<BlockMapType> {
   console.log(`Fetching BlockMap with roomId: ${roomId}`)
 
   const { data } = await useFetch<string>(
-    `https://blockmap.onrender.com/room?roomId=${roomId}`
+    `${BLOCK_MAP_URI}?roomId=${roomId}`
   ).get()
 
   return BlockMap.parse(JSON.parse(data.value ?? ''))
