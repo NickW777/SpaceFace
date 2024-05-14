@@ -9,10 +9,10 @@ import {
 } from './ZodTypes'
 import { useFetch } from '@vueuse/core'
 
-//Query SpaceProvider
 const SPACE_PROVIDER_URI = "https://spaceprovider.up.railway.app/api/v1";
 const BLOCK_MAP_URI = "https://blockmap.onrender.com/room";
 
+//Query SpaceProvider
 export async function fetchSpaceProvider(q: string, page: number): Promise<SpaceProviderType> {
   // const position = await new Promise<GeolocationPosition>((resolve, reject) => {
   //   navigator.geolocation.getCurrentPosition(resolve, reject)
