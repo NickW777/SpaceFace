@@ -18,7 +18,7 @@ export const useRoomPage = <K extends HTMLElement | null>(bar: Ref<K>) => {
     const response = await fetchSpaceProvider(currQuery.value.toString(), ++page.value)
     const { page: paginationData, rooms: newRooms } = response
     hasMoreRooms.value = !paginationData.last_page
-    rooms.value.push(...newRooms)
+    useRoomStore().pushRooms(newRooms)
     loading.value = false
   }
 

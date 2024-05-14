@@ -18,8 +18,7 @@ export const useRoomStore = defineStore('rooms', {
       currQuery: new String(),
 
       //Each entry in this array is a room availability calendar from BlockMap
-      roomAvailability: [] as BlockMapType[],
-
+      roomAvailability: [] as BlockMapType[]
     }
   },
 
@@ -29,7 +28,6 @@ export const useRoomStore = defineStore('rooms', {
       return (room: string) => state.roomAvailability[room]
     },
 
-
     getDetailRoom: (state) => {
       return () => state.currDetailRoom
     }
@@ -38,6 +36,10 @@ export const useRoomStore = defineStore('rooms', {
   actions: {
     setDetailRoom(room: RoomType) {
       this.currDetailRoom = room
+    },
+
+    pushRooms(newRooms) {
+      this.rooms.push(...newRooms)
     },
 
     toggleDetail() {
