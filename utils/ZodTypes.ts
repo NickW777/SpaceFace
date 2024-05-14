@@ -27,6 +27,7 @@ export const Room = z.object({
   room: z.string(),
   access_notes: z.string(),
   images: z.array(z.string()),
+  thumbnail: z.string(),
   labels: z.array(z.custom<Label>()),
   capacity: z.number(),
   last_edited: z.string().datetime(),
