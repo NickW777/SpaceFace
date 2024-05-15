@@ -1,5 +1,3 @@
-import { start } from "repl";
-import { RoomType } from "../../utils/ZodTypes";
 import { BlockMapType } from '../../utils/ZodTypes'
 
 const DAYS_OF_WEEK = [
@@ -14,7 +12,7 @@ const DAYS_OF_WEEK = [
 
 
 // Checks if a room is currently available
-export const isAvailable = (blockData:BlockMapType):boolean => {
+export function isAvailable(blockData:BlockMapType): {open:boolean, until:number} {
   
     const currentTime = new Date();
     const curDay = currentTime.getDay();
@@ -29,11 +27,16 @@ export const isAvailable = (blockData:BlockMapType):boolean => {
     let todaysTimeBlocks = blockData.Blocks[days[curDay]];
 
     // Checks if a current time is within a class block
+    // Also finds minimum next class start time
+    let nextClassStart = Infinity;
     for (const [startTime, endTime] of todaysTimeBlocks) {
+      if (startTime < nextClassStart && startTime > curTime) {
+        nextClassStart = startTime;
+      }
       if (startTime <= curTime && curTime <= endTime) {
-          return false;
-        }
+        return {open:false, until: endTime};
+      }
     }
 
-    return true;
+    return {open:true, until: nextClassStart};
 }

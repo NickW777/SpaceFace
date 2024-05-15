@@ -66,8 +66,7 @@ const isReady = ref(true)
 // Updates isReady
 function updateIsReady() {
   if (roomStore.showDetail) {
-    console.log(isAvailable(blockData.value))
-    isReady.value = isAvailable(blockData.value);
+    isReady.value = isAvailable(blockData.value).open;
   }
 }
 </script>
