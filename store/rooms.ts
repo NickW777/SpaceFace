@@ -42,7 +42,11 @@ export const useRoomStore = defineStore('rooms', {
 
     // Queries SpaceProvider and pushed the new rooms
     async updateRooms() {
-      const response = await fetchSpaceProvider(this.currQuery.toString(), this.currFilters, ++this.page)
+      const response = await fetchSpaceProvider(
+        this.currQuery.toString(),
+        this.currFilters,
+        ++this.page
+      )
       const { page: paginationData, rooms: newRooms } = response
       this.hasMoreRooms = !paginationData.last_page
       this.rooms.push(...newRooms)

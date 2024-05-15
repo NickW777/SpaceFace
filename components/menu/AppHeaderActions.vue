@@ -27,8 +27,9 @@ watch(searchActive, focusSearchField)
 // clear rooms in pinia.
 // This causes the intersection handler to make a new query
 const callAPIWithSearchQuery = async () => {
-  roomStore.currQuery = searchText.value;
-  roomStore.clearRooms();
+  roomStore.currQuery = searchText.value
+  roomStore.rooms = []
+  roomStore.updateRooms()
 }
 
 const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)
