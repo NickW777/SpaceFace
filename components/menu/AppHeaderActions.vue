@@ -24,6 +24,11 @@ watch(searchActive, focusSearchField)
 
 const callAPIWithSearchQuery = async () => {
   roomStore.startNewQuery(searchText.value)
+  roomStore.updateRooms()
+  // const response = await fetchSpaceProvider(roomStore.currQuery.toString(), ++roomStore.page)
+  // const { page: paginationData, rooms: newRooms } = response
+  // roomStore.hasMoreRooms = !paginationData.last_page
+  // roomStore.pushRooms(newRooms)
 }
 
 const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)
