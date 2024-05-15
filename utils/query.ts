@@ -9,8 +9,8 @@ import {
 } from './ZodTypes'
 import { useFetch } from '@vueuse/core'
 
-const SPACE_PROVIDER_URI = "https://spaceprovider.up.railway.app/api/v1";
-const BLOCK_MAP_URI = "https://blockmap.onrender.com/room";
+const SPACE_PROVIDER_URI = 'https://spaceprovider.up.railway.app/api/v1'
+const BLOCK_MAP_URI = 'https://blockmap.onrender.com/room'
 
 //Query SpaceProvider
 export async function fetchSpaceProvider(q: string, page: number): Promise<SpaceProviderType> {
@@ -23,7 +23,7 @@ export async function fetchSpaceProvider(q: string, page: number): Promise<Space
 
   // console.log(`Fetching SpaceProvider with query: ${q}`, `lat: ${lat}`, `lon: ${lon}`)
 
-  console.log("fetching SpaceProvider")
+  // console.log('fetching SpaceProvider')
   // const { data } = await useFetch<string>(
   //   `https://spaceprovider.up.railway.app/api/v1?q=${q}&page=${page}&limit=10&lat=${lat}&lon=${lon}`
   // ).get()
@@ -35,23 +35,21 @@ export async function fetchSpaceProvider(q: string, page: number): Promise<Space
   return SpaceProvider.parse(JSON.parse(data.value ?? ''))
 }
 
-export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
-  console.log(`Fetching complete SpaceProvider with id: ${id}`)
+// export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
+//   console.log(`Fetching complete SpaceProvider with id: ${id}`)
 
-  const { data } = await useFetch<string>(
-    `${SPACE_PROVIDER_URI}?_id=${id}`
-  ).get()
+//   const { data } = await useFetch<string>(`${SPACE_PROVIDER_URI}?_id=${id}`).get()
 
-  return Room.parse(JSON.parse(data.value ?? ''))
-}
+//   return Room.parse(JSON.parse(data.value ?? ''))
+// }
 
 //Query BlockMap
-export async function fetchBlockMap(roomId: string): Promise<BlockMapType> {
-  console.log(`Fetching BlockMap with roomId: ${roomId}`)
+// export async function fetchBlockMap(roomId: string): Promise<BlockMapType> {
+//   console.log(`Fetching BlockMap with roomId: ${roomId}`)
 
-  const { data } = await useFetch<string>(
-    `${BLOCK_MAP_URI}?roomId=${roomId}`
-  ).get()
+//   const { data } = await useFetch<string>(
+//     `${BLOCK_MAP_URI}?roomId=${roomId}`
+//   ).get()
 
-  return BlockMap.parse(JSON.parse(data.value ?? ''))
-}
+//   return BlockMap.parse(JSON.parse(data.value ?? ''))
+// }
