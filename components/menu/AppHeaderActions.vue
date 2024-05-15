@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, Ref } from 'vue'
-import { useDebounceFn, useGeolocation } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core'
 import { useRoomStore } from '../../store/rooms'
 import { fetchSpaceProvider } from '../../utils/query'
 import FilterModal from './FilterModal.vue'
@@ -12,11 +12,14 @@ const searchActive = ref(false)
 const searchInput = ref<HTMLInputElement | null>(null)
 const searchText = ref('')
 
-// Puts cursor in search bar when search is active
+// Filter Button stuff
+const filterActive = ref(false)
+
 const focusSearchField = () => {
   if (!searchActive.value) return
   queueMicrotask(() => searchInput.value?.focus())
 }
+
 watch(searchActive, focusSearchField)
 
 // Two seconds after searchText is modified,
@@ -27,11 +30,10 @@ const callAPIWithSearchQuery = async () => {
   roomStore.currQuery = searchText.value;
   roomStore.clearRooms();
 }
-const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)
-watch(searchText, updateSearch)
 
-// Filter Button stuff
-const filterActive = ref(false)
+const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)
+
+watch(searchText, updateSearch)
 </script>
 
 <template>

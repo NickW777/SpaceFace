@@ -9,7 +9,7 @@ import {
 } from './ZodTypes'
 import { useFetch } from '@vueuse/core'
 
-//Query SpaceProvider
+const SPACE_PROVIDER_URI = 'https://spaceprovider.up.railway.app/api/v1'
 
 export async function fetchSpaceProvider(q: string, filterArr:string[], page: number): Promise<SpaceProviderType> {
 
@@ -26,31 +26,11 @@ export async function fetchSpaceProvider(q: string, filterArr:string[], page: nu
   // Parse filterArr into queryable string
   let filterQuery = "";
   filterArr.forEach(label => filterQuery += " label:" + label)
+  // console.log(`${SPACE_PROVIDER_URI}?q=${q}${filterQuery}&page=${page}&limit=10`)
 
   const { data } = await useFetch<string>(
-    `https://spaceprovider.up.railway.app/api/v1?q=${q}${filterQuery}&page=${page}&limit=10`
+    `${SPACE_PROVIDER_URI}?q=${q}${filterQuery}&page=${page}&limit=10`
   ).get()
 
   return SpaceProvider.parse(JSON.parse(data.value ?? ''))
-}
-
-export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
-  console.log(`Fetching complete SpaceProvider with id: ${id}`)
-
-  const { data } = await useFetch<string>(
-    `https://spaceprovider.up.railway.app/api/v1?_id=${id}`
-  ).get()
-
-  return Room.parse(JSON.parse(data.value ?? ''))
-}
-
-//Query BlockMap
-export async function fetchBlockMap(roomId: string): Promise<BlockMapType> {
-  console.log(`Fetching BlockMap with roomId: ${roomId}`)
-
-  const { data } = await useFetch<string>(
-    `https://blockmap.onrender.com/room?roomId=${roomId}`
-  ).get()
-
-  return BlockMap.parse(JSON.parse(data.value ?? ''))
 }
