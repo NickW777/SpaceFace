@@ -39,7 +39,7 @@ const editRoom = () => {
 }
 const googleMaps = () => {
   window.open(
-    `https://www.google.com/maps/search/?api=1&query=${gps_coords.coordinates[0]}%2C${gps_coords.coordinates[1]}`,
+    `https://www.google.com/maps/search/?api=1&query=${gps_coords.coordinates[1]}%2C${gps_coords.coordinates[0]}`,
     '_blank'
   )
 }
