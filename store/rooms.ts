@@ -20,10 +20,7 @@ export const useRoomStore = defineStore('rooms', {
       currFilters: [] as string[],
 
       //Each entry in this array is a room availability calendar from BlockMap
-      roomAvailability: [] as BlockMapType[],
-
-      // Store status of room availability calendar loading
-      roomAvailabilityLoading: false
+      roomAvailability: [] as BlockMapType[]
     }
   },
 
@@ -31,10 +28,6 @@ export const useRoomStore = defineStore('rooms', {
     // yonas note: consider localizing to RoomAvailability component
     getRoomAvailability: (state) => {
       return (room: string) => state.roomAvailability[room]
-    },
-
-    isLoadingRoomAvailability: (state) => {
-      return state.roomAvailabilityLoading
     },
 
     getDetailRoom: (state) => {

@@ -12,7 +12,7 @@ import { useFetch } from '@vueuse/core'
 const SPACE_PROVIDER_URI = 'https://spaceprovider.up.railway.app/api/v1'
 
 export async function fetchSpaceProvider(q: string, filterArr:string[], page: number): Promise<SpaceProviderType> {
-
+  console.log("fetching SpaceProvider")
   // Note from Will: Latitude and longitude isnt working smoothly for me, so its commented out
   // const position = await new Promise<GeolocationPosition>((resolve, reject) => {
   //   navigator.geolocation.getCurrentPosition(resolve, reject)
@@ -21,7 +21,6 @@ export async function fetchSpaceProvider(q: string, filterArr:string[], page: nu
   // const lon = position.coords.longitude
   // console.log(`Fetching SpaceProvider with query: ${q}`, `lat: ${lat}`, `lon: ${lon}, `, filterArr)
 
-  console.log("fetching SpaceProvider")
 
   // Parse filterArr into queryable string
   let filterQuery = "";

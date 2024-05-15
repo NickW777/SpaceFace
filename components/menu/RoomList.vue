@@ -25,7 +25,7 @@ const { rooms, loading } = useRoomPage<HTMLElement>(bar)
         @click.stop="toggleDetail(room)"
         :building="room.building"
         :room="room.room"
-        :thumbnail="room.images?.[0] || '/images/imageNotFound.jpg'"
+        :thumbnail="room.thumbnail || '/images/imageNotFound.jpg'"
         availability="Available For Another 3 Hours (Until 5pm)"
         :labels="room.labels"
       />

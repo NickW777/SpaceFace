@@ -51,7 +51,7 @@ onMounted(async () => {
 
   await axios.get(url).then((res) => {
     if (!res?.data?.images) return console.error('No images found for this room')
-    for (let i = 1; i < res.data.images.length; i++) {
+    for (let i = 0; i < res.data.images.length; i++) {
       currDetailRoom.value.images.push(res.data.images[i])
     }
   })

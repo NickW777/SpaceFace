@@ -4,7 +4,7 @@ import { BlockMapType } from '../../utils/ZodTypes'
 import MultiSelect from '../shared/MultiSelect.vue'
 import CalendarBlock from './CalendarBlock.vue'
 import { getBlock } from './getBlock'
-
+import {isAvailable} from '../shared/isAvailable'
 import { useRoomStore } from '../../store/rooms'
 const roomStore = useRoomStore()
 
@@ -54,7 +54,22 @@ onMounted(async () => {
   }
   blockData.value = blockFetchRes
   loading.value = false
+
+  // Set room availability every second
+  updateIsReady();
+  setInterval(updateIsReady, 30000)
 })
+
+// Ref for room availability
+const isReady = ref(true)
+
+// Updates isReady
+function updateIsReady() {
+  if (roomStore.showDetail) {
+    console.log(isAvailable(blockData.value))
+    isReady.value = isAvailable(blockData.value);
+  }
+}
 </script>
 
 <template>
@@ -66,8 +81,8 @@ onMounted(async () => {
       </h1>
 
       <!-- emblem -->
-      <span class="bg-green-500 text-white px-3 rounded-full shadow-gray-400 shadow-sm">
-        ready now
+      <span class="bg-green-500 text-white px-3 rounded-full shadow-gray-400 shadow-sm" :class="{'bg-green-500' : isReady, 'bg-red-500' : !isReady}">
+        {{isReady ? "ready now" : "not ready"}}
       </span>
     </div>
 
