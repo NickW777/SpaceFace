@@ -13,12 +13,8 @@ export const useRoomPage = <K extends HTMLElement | null>(bar: Ref<K>) => {
   const intersectionHandler = async ([bar]: IntersectionObserverEntry[]) => {
     if (!bar.isIntersecting || !hasMoreRooms.value) return
     loading.value = true
-    // const rawResponse = await fetch(SPACE_PROVIDER_URI + `?page=${++page.value}&limit=10`)
-    // const response = await rawResponse.json()
-    const response = await fetchSpaceProvider(currQuery.value.toString(), ++page.value)
-    const { page: paginationData, rooms: newRooms } = response
-    hasMoreRooms.value = !paginationData.last_page
-    useRoomStore().pushRooms(newRooms)
+
+    useRoomStore().updateRooms()
     loading.value = false
   }
 
