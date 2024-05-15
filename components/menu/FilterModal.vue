@@ -13,11 +13,11 @@ const props = defineProps({
 const checkedLabels = ref([]);
 const roomStore = useRoomStore();
 
-
+// updates currFilters in pinia then clears rooms in pinia
+// This causes the intersection handler to make a new query
 const handleFilter = () => {
-    roomStore.rooms = roomStore.roomsCopy.filter(room => 
-        checkedLabels.value.every(label => room.labels.includes(label))
-    )
+    roomStore.currFilters = checkedLabels.value;
+    roomStore.clearRooms();
 }
 </script>
 

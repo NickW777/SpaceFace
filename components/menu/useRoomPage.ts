@@ -6,14 +6,13 @@ import { fetchSpaceProvider } from '../../utils/query'
 // const SPACE_PROVIDER_URI = `https://spaceprovider.up.railway.app/api/v1`
 
 export const useRoomPage = <K extends HTMLElement | null>(bar: Ref<K>) => {
-  const { rooms, hasMoreRooms, page, currQuery } = storeToRefs(useRoomStore())
+  const { rooms, hasMoreRooms, page, currQuery, currFilters } = storeToRefs(useRoomStore())
 
   const loading = ref(false)
 
   const intersectionHandler = async ([bar]: IntersectionObserverEntry[]) => {
     if (!bar.isIntersecting || !hasMoreRooms.value) return
     loading.value = true
-
     useRoomStore().updateRooms()
     loading.value = false
   }

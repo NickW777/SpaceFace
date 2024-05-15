@@ -10,46 +10,26 @@ import {
 import { useFetch } from '@vueuse/core'
 
 const SPACE_PROVIDER_URI = 'https://spaceprovider.up.railway.app/api/v1'
-const BLOCK_MAP_URI = 'https://blockmap.onrender.com/room'
 
-//Query SpaceProvider
-export async function fetchSpaceProvider(q: string, page: number): Promise<SpaceProviderType> {
+export async function fetchSpaceProvider(q: string, filterArr:string[], page: number): Promise<SpaceProviderType> {
+  console.log("fetching SpaceProvider")
+  // Note from Will: Latitude and longitude isnt working smoothly for me, so its commented out
   // const position = await new Promise<GeolocationPosition>((resolve, reject) => {
   //   navigator.geolocation.getCurrentPosition(resolve, reject)
   // })
-
   // const lat = position.coords.latitude
   // const lon = position.coords.longitude
+  // console.log(`Fetching SpaceProvider with query: ${q}`, `lat: ${lat}`, `lon: ${lon}, `, filterArr)
 
-  // console.log(`Fetching SpaceProvider with query: ${q}`, `lat: ${lat}`, `lon: ${lon}`)
 
-  // console.log('fetching SpaceProvider')
-  // const { data } = await useFetch<string>(
-  //   `https://spaceprovider.up.railway.app/api/v1?q=${q}&page=${page}&limit=10&lat=${lat}&lon=${lon}`
-  // ).get()
+  // Parse filterArr into queryable string
+  let filterQuery = "";
+  filterArr.forEach(label => filterQuery += " label:" + label)
+  // console.log(`${SPACE_PROVIDER_URI}?q=${q}${filterQuery}&page=${page}&limit=10`)
 
   const { data } = await useFetch<string>(
-    `${SPACE_PROVIDER_URI}?q=${q}&page=${page}&limit=10`
+    `${SPACE_PROVIDER_URI}?q=${q}${filterQuery}&page=${page}&limit=10`
   ).get()
 
   return SpaceProvider.parse(JSON.parse(data.value ?? ''))
 }
-
-// export async function fetchCompleteSpaceProvider(id: string): Promise<RoomType> {
-//   console.log(`Fetching complete SpaceProvider with id: ${id}`)
-
-//   const { data } = await useFetch<string>(`${SPACE_PROVIDER_URI}?_id=${id}`).get()
-
-//   return Room.parse(JSON.parse(data.value ?? ''))
-// }
-
-//Query BlockMap
-// export async function fetchBlockMap(roomId: string): Promise<BlockMapType> {
-//   console.log(`Fetching BlockMap with roomId: ${roomId}`)
-
-//   const { data } = await useFetch<string>(
-//     `${BLOCK_MAP_URI}?roomId=${roomId}`
-//   ).get()
-
-//   return BlockMap.parse(JSON.parse(data.value ?? ''))
-// }

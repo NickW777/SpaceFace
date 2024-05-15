@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, Ref } from 'vue'
-import { useDebounceFn, useGeolocation } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core'
 import { useRoomStore } from '../../store/rooms'
 import { fetchSpaceProvider } from '../../utils/query'
 import FilterModal from './FilterModal.vue'
@@ -22,13 +22,13 @@ const focusSearchField = () => {
 
 watch(searchActive, focusSearchField)
 
+// Two seconds after searchText is modified,
+// update currQuery to searchText in pinia,
+// clear rooms in pinia.
+// This causes the intersection handler to make a new query
 const callAPIWithSearchQuery = async () => {
-  roomStore.startNewQuery(searchText.value)
-  roomStore.updateRooms()
-  // const response = await fetchSpaceProvider(roomStore.currQuery.toString(), ++roomStore.page)
-  // const { page: paginationData, rooms: newRooms } = response
-  // roomStore.hasMoreRooms = !paginationData.last_page
-  // roomStore.pushRooms(newRooms)
+  roomStore.currQuery = searchText.value;
+  roomStore.clearRooms();
 }
 
 const updateSearch = useDebounceFn(callAPIWithSearchQuery, 2000)

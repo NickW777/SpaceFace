@@ -17,6 +17,8 @@ export const useRoomStore = defineStore('rooms', {
       //getting the next page so we can reset results
       currQuery: new String(),
 
+      currFilters: [] as string[],
+
       //Each entry in this array is a room availability calendar from BlockMap
       roomAvailability: [] as BlockMapType[]
     }
@@ -40,7 +42,7 @@ export const useRoomStore = defineStore('rooms', {
 
     // Queries SpaceProvider and pushed the new rooms
     async updateRooms() {
-      const response = await fetchSpaceProvider(this.currQuery.toString(), ++this.page)
+      const response = await fetchSpaceProvider(this.currQuery.toString(), this.currFilters, ++this.page)
       const { page: paginationData, rooms: newRooms } = response
       this.hasMoreRooms = !paginationData.last_page
       this.rooms.push(...newRooms)
@@ -50,9 +52,8 @@ export const useRoomStore = defineStore('rooms', {
       this.showDetail = !this.showDetail
     },
 
-    startNewQuery(query: string) {
+    clearRooms() {
       this.page = 0
-      this.currQuery = query
       this.rooms = []
     }
   }
