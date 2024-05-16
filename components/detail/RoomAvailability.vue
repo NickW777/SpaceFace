@@ -46,7 +46,7 @@ const props = defineProps<{
 
 onMounted(async () => {
   loading.value = true
-  if (roomStore.currDetailRoom.availability) {
+  if (!roomStore.currDetailRoom.availability["ERROR"]) {
     blockData.value = roomStore.currDetailRoom.availability
   }
   loading.value = false
