@@ -36,6 +36,12 @@ export const useRoomStore = defineStore('rooms', {
   },
 
   actions: {
+    resetRoomStore() {
+      this.rooms = []
+      this.hasMoreRooms = true
+      this.page = 0
+    },
+
     setDetailRoom(room: RoomType) {
       this.currDetailRoom = room
     },

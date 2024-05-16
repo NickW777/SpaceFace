@@ -28,7 +28,7 @@ watch(searchActive, focusSearchField)
 // This causes the intersection handler to make a new query
 const callAPIWithSearchQuery = async () => {
   roomStore.currQuery = searchText.value
-  roomStore.rooms = []
+  roomStore.resetRoomStore()
   roomStore.updateRooms()
 }
 
