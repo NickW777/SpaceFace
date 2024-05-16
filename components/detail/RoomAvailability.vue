@@ -3,7 +3,6 @@ import { ref, onMounted, computed } from 'vue'
 import { BlockMapType } from '../../utils/ZodTypes'
 import MultiSelect from '../shared/MultiSelect.vue'
 import CalendarBlock from './CalendarBlock.vue'
-import { getBlock } from './getBlock'
 import {isAvailable} from '../shared/isAvailable'
 import { useRoomStore } from '../../store/rooms'
 const roomStore = useRoomStore()
@@ -47,12 +46,9 @@ const props = defineProps<{
 
 onMounted(async () => {
   loading.value = true
-  const blockFetchRes = await getBlock(props.building, props.room)
-  if ('ERROR' in blockFetchRes) {
-    loading.value = false
-    return
+  if (roomStore.currDetailRoom.availability) {
+    blockData.value = roomStore.currDetailRoom.availability
   }
-  blockData.value = blockFetchRes
   loading.value = false
 
   // Set room availability every second

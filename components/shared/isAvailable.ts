@@ -20,10 +20,8 @@ export function isAvailable(blockData:BlockMapType): {open:boolean, until:number
   
   const currentTime = new Date();
   const curDay = currentTime.getDay();
-  // const curHours = currentTime.getHours();
-  // const curMinutes = currentTime.getMinutes();
-  const curHours = 10
-  const curMinutes = 0
+  const curHours = currentTime.getHours();
+  const curMinutes = currentTime.getMinutes();
   
   // Get Current Time in correct format
   let curTime = parseInt(curHours + "" + (curMinutes<10 ? "0"+curMinutes : curMinutes));

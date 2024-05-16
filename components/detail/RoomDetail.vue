@@ -40,11 +40,10 @@ const editRoom = () => {
   window.open(`https://spaceprovider.up.railway.app/admin?room=${room}`, '_blank')
 }
 const googleMaps = () => {
-  console.log(availability)
-  // window.open(
-  //   `https://www.google.com/maps/search/?api=1&query=${gps_coords.coordinates[1]}%2C${gps_coords.coordinates[0]}`,
-  //   '_blank'
-  // )
+  window.open(
+    `https://www.google.com/maps/search/?api=1&query=${gps_coords.coordinates[1]}%2C${gps_coords.coordinates[0]}`,
+    '_blank'
+  )
 }
 
 onMounted(async () => {
