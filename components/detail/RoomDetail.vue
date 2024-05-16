@@ -22,6 +22,7 @@ const room = currDetailRoom.value.building + ' ' + currDetailRoom.value.room
 const images = currDetailRoom.value.images
 const gps_coords = currDetailRoom.value.gps_coords
 const accessNotes = currDetailRoom.value.access_notes
+const availability = currDetailRoom.value.availability
 
 const fileIssue = (type: 'issue' | 'feedback') => {
   const title = type === 'issue' ? 'Report Issue' : 'Feedback'
