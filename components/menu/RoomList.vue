@@ -5,6 +5,7 @@ import { useRoomStore } from '../../store/rooms'
 import RoomCard from './RoomCard.vue'
 import RoomCardSkeleton from './RoomCardSkeleton.vue'
 import { type RoomType } from '../../utils/ZodTypes'
+import { isAvailable } from '../shared/isAvailable'
 
 const roomStore = useRoomStore()
 
@@ -16,6 +17,28 @@ const toggleDetail = async (room: RoomType) => {
 const bar = ref()
 
 const { rooms, loading } = useRoomPage<HTMLElement>(bar)
+
+function getText(room:RoomType):string {
+  const availability = isAvailable(room.availability);
+  if (availability.open && availability.until == Infinity) {
+    return "No more classes today"
+  }
+
+  const hoursRemaining = Math.floor(availability.timeRemaining / 100)
+  const minutesRemaining = availability.timeRemaining % 100
+  const timeRemaining = (hoursRemaining + minutesRemaining / 60).toFixed(1)
+
+  let hoursUntil = Math.floor(availability.until/100)
+  const minutesUntil = availability.until%100 < 10 ? "0" +  availability.until%100 : "" + availability.until%100;
+  const meridiem = hoursUntil < 12 ? "am" : "pm";
+  if (hoursUntil > 12) hoursUntil -= 12;
+
+  if (availability.open) {
+    return "Available for " + timeRemaining + " hours (until " + hoursUntil + ":" + minutesUntil + meridiem + ")";
+  } else {
+    return "Closed for " + timeRemaining + " hours (until " + hoursUntil + ":" + minutesUntil + meridiem + ")";
+  }
+}
 </script>
 
 <template>
@@ -26,7 +49,7 @@ const { rooms, loading } = useRoomPage<HTMLElement>(bar)
         :building="room.building"
         :room="room.room"
         :thumbnail="room.thumbnail || '/images/imageNotFound.jpg'"
-        availability="Available For Another 3 Hours (Until 5pm)"
+        :availability="getText(room)"
         :labels="room.labels"
       />
     </div>
