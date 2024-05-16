@@ -3,10 +3,12 @@ import { BlockMapType, RoomType, SpaceProviderType } from '../utils/ZodTypes'
 import { Label } from '../utils/labels'
 
 import { fetchSpaceProvider } from '../utils/query'
+import { getBlock } from '../components/detail/getBlock'
 
 export const useRoomStore = defineStore('rooms', {
   state: () => {
     return {
+
       rooms: [] as RoomType[],
       hasMoreRooms: true,
       page: 0,
@@ -45,6 +47,16 @@ export const useRoomStore = defineStore('rooms', {
       const response = await fetchSpaceProvider(this.currQuery.toString(), this.currFilters, ++this.page)
       const { page: paginationData, rooms: newRooms } = response
       this.hasMoreRooms = !paginationData.last_page
+
+      // Query Blockmap for each room
+      for (const m_room of newRooms) {
+        const blockFetchRes = getBlock(m_room.building, m_room.room)
+        if ('ERROR' in blockFetchRes) {
+          console.log("error fetching blockmap")
+        }
+        m_room.availability = await blockFetchRes;
+      }
+
       this.rooms.push(...newRooms)
     },
 

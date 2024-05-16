@@ -1,6 +1,27 @@
 import { z } from 'zod'
 import { Label } from './labels'
 
+//BlockMap
+const Time = z.tuple([z.number(), z.number()])
+
+const Blocks = z.object({
+  Mon: z.array(Time),
+  Tue: z.array(Time),
+  Wed: z.array(Time),
+  Thu: z.array(Time),
+  Fri: z.array(Time),
+  Sat: z.array(Time),
+  Sun: z.array(Time)
+})
+
+export const BlockMap = z.object({
+  building_code: z.string(),
+  room_code: z.string(),
+  Blocks: Blocks
+})
+
+export type BlockMapType = z.infer<typeof BlockMap>
+
 //SpaceProvider
 const Page = z.object({
   limit: z.number(),
@@ -31,9 +52,9 @@ export const Room = z.object({
   labels: z.array(z.custom<Label>()),
   capacity: z.number(),
   last_edited: z.string().datetime(),
-  __v: z.number()
+  __v: z.number(),
+  availability: z.custom<BlockMapType>()
 })
-
 export type RoomType = z.infer<typeof Room>
 
 export const SpaceProvider = z.object({
@@ -41,26 +62,4 @@ export const SpaceProvider = z.object({
   options: Options,
   rooms: z.array(Room)
 })
-
 export type SpaceProviderType = z.infer<typeof SpaceProvider>
-
-//BlockMap
-const Time = z.tuple([z.number(), z.number()])
-
-const Blocks = z.object({
-  Mon: z.array(Time),
-  Tue: z.array(Time),
-  Wed: z.array(Time),
-  Thu: z.array(Time),
-  Fri: z.array(Time),
-  Sat: z.array(Time),
-  Sun: z.array(Time)
-})
-
-export const BlockMap = z.object({
-  building_code: z.string(),
-  room_code: z.string(),
-  Blocks: Blocks
-})
-
-export type BlockMapType = z.infer<typeof BlockMap>
